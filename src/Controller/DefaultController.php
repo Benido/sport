@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
-    #[Route(path: '/')]
+    #[Route(path: '/', name: 'app_home')]
     public function index()
     {
         // Nous générons du contenu pour notre réponse

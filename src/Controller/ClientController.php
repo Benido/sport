@@ -7,7 +7,7 @@ use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ClientController extends AbstractController
 {
-    #[Route(path: '/client')]
+    #[Route(path: '/client', name:'app_client')]
     public function client() {
         // Nous générons du contenu pour notre réponse
         $helloClient = 'Ici c\'est la vue partenaire';

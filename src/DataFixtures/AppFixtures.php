@@ -22,29 +22,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-        //Creates the three types of user
-        $user = new User();
-        $user->setEmail('user@test.com');
-        $user->setRoles(["ROLE_USER"]);
-        $password = $this->hasher->hashPassword($user, 'password');
-        $user->setPassword($password);
-        $manager->persist($user);
-
-        $user = new User();
-        $user->setEmail('client@test.com');
-        $user->setRoles(["ROLE_CLIENT"]);
-        $password = $this->hasher->hashPassword($user, 'password');
-        $user->setPassword($password);
-        $manager->persist($user);
-
-        $user = new User();
-        $user->setEmail('manager@test.com');
-        $user->setRoles(["ROLE_MANAGER"]);
-        $password = $this->hasher->hashPassword($user, 'password');
-        $user->setPassword($password);
-        $manager->persist($user);
-
-        //Creates 6 Partenaires
+       //Creates 6 Partenaires
 
         $partenaires = [];
         for ($i = 1; $i < 7; $i++) {
@@ -83,6 +61,28 @@ class AppFixtures extends Fixture
             $branch->setStructure($structures[$iTable[$i]]);
             $manager->persist($branch);
         }
+
+        //Creates the three types of user
+        $user = new User();
+        $user->setEmail('user@test.com');
+        $user->setRoles(["ROLE_USER"]);
+        $password = $this->hasher->hashPassword($user, 'password');
+        $user->setPassword($password);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setEmail('client@test.com');
+        $user->setRoles(["ROLE_CLIENT"]);
+        $password = $this->hasher->hashPassword($user, 'password');
+        $user->setPassword($password);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setEmail('manager@test.com');
+        $user->setRoles(["ROLE_MANAGER"]);
+        $password = $this->hasher->hashPassword($user, 'password');
+        $user->setPassword($password);
+        $manager->persist($user);
         $manager->flush();
     }
 }

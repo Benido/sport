@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html.twig" %}
+
+{% block body %}
     <h1>{{ hello }}</h1>
-</body>
-</html>
+    <br>
+    <a href={{ path('app_login') }}>log in !</a>
+{% endblock %}
