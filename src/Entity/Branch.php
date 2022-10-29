@@ -14,6 +14,9 @@ class Branch
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?bool $active = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $perms = null;
 
@@ -26,9 +29,25 @@ class Branch
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
+    #[ORM\ManyToOne(inversedBy: 'branches')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Structure $structure = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
     }
 
     public function getPerms(): ?string
@@ -75,6 +94,18 @@ class Branch
     public function setAddress(string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getStructure(): ?Structure
+    {
+        return $this->structure;
+    }
+
+    public function setStructure(?Structure $structure): self
+    {
+        $this->structure = $structure;
 
         return $this;
     }
