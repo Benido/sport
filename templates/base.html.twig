@@ -14,6 +14,10 @@
         {% endblock %}
     </head>
     <body>
+        {%  include 'header.html.twig' %}
         {% block body %}{% endblock %}
+        {% block footer %}
+            &copy; Copyright 2022 by me
+        {% endblock %}
     </body>
 </html>

@@ -1,0 +1,14 @@
+<header>
+    <h1>Sapik</h1>
+    <div>    {% if app.request.pathinfo != path('app_home') %}
+        <a href="{{ path('app_home') }}">Retour à l'accueil</a><br>
+        {% endif %}
+        {% if app.request.pathinfo != path('app_login') %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED' ) %}
+            <a href="{{ path('app_logout') }}">Déconnexion</a>
+            {% else %}
+            <a href="{{ path('app_login') }}">Connexion</a>
+            {% endif %}
+        {% endif %}
+    </div>
+</header>

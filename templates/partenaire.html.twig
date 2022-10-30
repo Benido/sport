@@ -4,14 +4,14 @@
     <h1>Hello {{ app.user.email }}</h1>
     <div class="container">
         <div id="searchBlock">Rechercher</div>
-        <div id="PartenairesDisplayBlock">
-            {% for partenaire in partenaires %}
+        <div id="StructuresDisplayBlock">
+            {% for structure in structures %}
                 <div>
-                    <p>{{ partenaire.clientName }}</p><br>
-                    <p>{{ partenaire.active ? '+' : '-' }}</p>
+                    <p>{{ structure.Partenaire.getClientName }}</p>
+                    <p>{{ structure.active ? '+' : '-' }}</p>
+                    <br>
                 </div>
             {% endfor %}
         </div>
     </div>
-
 {% endblock %}

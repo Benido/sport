@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Partenaire;
 use App\Entity\Structure;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,20 +40,20 @@ class StructureRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Structure[] Returns an array of Structure objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Structure[] Returns an array of Structure objects
+     */
+    public function findByClientId($value): array
+    {
+        return $this->createQueryBuilder('u')
+ //           ->from('App\Entity\Structure', 's')
+            ->join('App\Entity\Partenaire', 'p', 'WITH','u.Partenaire = p.id' )
+            ->andWhere('p.client = :val')
+            ->setParameter('val', $value, type: 'uuid' )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Structure
 //    {

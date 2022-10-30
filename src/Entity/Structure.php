@@ -29,7 +29,7 @@ class Structure
     #[ORM\JoinColumn(nullable: false)]
     private ?Partenaire $Partenaire = null;
 
-    #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Branch::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'structure', targetEntity: Branch::class, orphanRemoval: true)]
     private Collection $branches;
 
 

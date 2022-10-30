@@ -18,7 +18,7 @@ class SecurityController extends AbstractController
             if (in_array("ROLE_USER", $roles)) {
                 return $this->redirectToRoute('app_panel');
             } elseif (in_array("ROLE_CLIENT", $roles)) {
-                return $this->redirectToRoute('app_client');
+                return $this->redirectToRoute('app_partenaire');
             } else {
                 return $this->redirectToRoute('app_manager');
             }
