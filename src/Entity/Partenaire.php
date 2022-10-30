@@ -24,6 +24,9 @@ class Partenaire
     #[ORM\OneToMany(mappedBy: 'Partenaire', targetEntity: Structure::class, orphanRemoval: true)]
     private Collection $structures;
 
+    #[ORM\ManyToOne(inversedBy: 'Partenaire')]
+    private ?Client $client = null;
+
     public function __construct()
     {
         $this->structures = new ArrayCollection();
@@ -84,6 +87,18 @@ class Partenaire
                 $structure->setPartenaire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+{
+    return $this->client;
+}
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

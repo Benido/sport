@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
+use App\Entity\Admin;
+use App\Entity\Client;
+use App\Entity\Manager;
 use App\Entity\Partenaire;
 use App\Entity\Structure;
 use App\Entity\Branch;
@@ -21,14 +23,29 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        //Creates two types of user
+        $admin = new Admin();
+        $admin->setEmail('admin@test.com');
+        $admin->setRoles(["ROLE_USER"]);
+        $password = $this->hasher->hashPassword($admin, 'password');
+        $admin->setPassword($password);
+        $manager->persist($admin);
 
-       //Creates 6 Partenaires
+        $client = new Client();
+        $client->setEmail('client@test.com');
+        $client->setRoles(["ROLE_CLIENT"]);
+        $password = $this->hasher->hashPassword($client, 'password');
+        $client->setPassword($password);
+        $manager->persist($client);
+
+        //Creates 6 Partenaires
 
         $partenaires = [];
         for ($i = 1; $i < 7; $i++) {
             $partenaire = new Partenaire();
             $partenaire->setClientName('Partenaire ' . $i);
             $partenaire->setActive(mt_rand(0, 1));
+            $partenaire->setClient($client);
             $manager->persist($partenaire);
             //$this->addReference('Partenaire_' . $i, $partenaire);
             $partenaires[] = $partenaire;
@@ -51,6 +68,7 @@ class AppFixtures extends Fixture
         }
 
         //Creates 12 Branches
+        $branch = null;
         $iTable = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3];
         for ($i = 0; $i < 12; $i++) {
             $branch = new Branch();
@@ -62,27 +80,14 @@ class AppFixtures extends Fixture
             $manager->persist($branch);
         }
 
-        //Creates the three types of user
-        $user = new User();
-        $user->setEmail('user@test.com');
-        $user->setRoles(["ROLE_USER"]);
-        $password = $this->hasher->hashPassword($user, 'password');
-        $user->setPassword($password);
-        $manager->persist($user);
+        $mgr = new Manager();
+        $mgr->setEmail('manager@test.com');
+        $mgr->setRoles(["ROLE_MANAGER"]);
+        $password = $this->hasher->hashPassword($mgr, 'password');
+        $mgr->setPassword($password);
+        $mgr->setBranch($branch);
+        $manager->persist($mgr);
 
-        $user = new User();
-        $user->setEmail('client@test.com');
-        $user->setRoles(["ROLE_CLIENT"]);
-        $password = $this->hasher->hashPassword($user, 'password');
-        $user->setPassword($password);
-        $manager->persist($user);
-
-        $user = new User();
-        $user->setEmail('manager@test.com');
-        $user->setRoles(["ROLE_MANAGER"]);
-        $password = $this->hasher->hashPassword($user, 'password');
-        $user->setPassword($password);
-        $manager->persist($user);
         $manager->flush();
     }
 }

@@ -32,6 +32,7 @@ class Structure
     #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Branch::class, orphanRemoval: true)]
     private Collection $branches;
 
+
     public function __construct()
     {
         $this->branches = new ArrayCollection();
@@ -117,4 +118,6 @@ class Structure
 
         return $this;
     }
+
+
 }

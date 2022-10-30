@@ -33,6 +33,9 @@ class Branch
     #[ORM\JoinColumn(nullable: false)]
     private ?Structure $structure = null;
 
+    #[ORM\OneToOne(mappedBy: 'branch', cascade: ['persist', 'remove'])]
+    private ?Manager $manager = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,23 @@ class Branch
     public function setStructure(?Structure $structure): self
     {
         $this->structure = $structure;
+
+        return $this;
+    }
+
+    public function getManager(): ?Manager
+    {
+        return $this->manager;
+    }
+
+    public function setManager(Manager $manager): self
+    {
+        // set the owning side of the relation if necessary
+        if ($manager->getBranch() !== $this) {
+            $manager->setBranch($this);
+        }
+
+        $this->manager = $manager;
 
         return $this;
     }
