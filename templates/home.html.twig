@@ -7,7 +7,7 @@
     {% elseif is_granted('ROLE_CLIENT') and not is_granted('ROLE_ADMIN')%}
     <a href={{ path('app_partenaire', {id: app.user.getPartenaire.getId}) }}>Accédez à votre page partenaire</a>
     {% elseif is_granted('ROLE_MANAGER') and not is_granted('ROLE_CLIENT') and not is_granted('ROLE_ADMIN')%}
-    <a href={{ path('app_structure', {id: app.user.getStructure.getId}) }}>Accédez à votre page partenaire</a>
+    <a href={{ path('app_structure', {id: app.user.getStructure.getId}) }}>Accédez à votre page structure</a>
     {% endif %}
 
 {% endblock %}

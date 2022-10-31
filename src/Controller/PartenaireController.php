@@ -3,16 +3,18 @@
 namespace App\Controller;
 
 use App\Repository\PartenaireRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PartenaireController extends AbstractController
 {
-    #[Route(path: '/partenaire/{id}', name:'app_partenaire')]
+
+    #[Route(path: '/partenaire/{id}', name:'app_partenaire', methods: ['GET'])]
     public function partenaire(string $id, PartenaireRepository $partenaireRepo): Response
     {
-        //On vérifie que l'utiliseur a bien le ROLE_CLIENT et que l'id du partenaire correspond
+        //On vérifie que l'utilisateur a bien le ROLE_CLIENT et que l'id du partenaire correspond
         if (!$this->isGranted('ROLE_ADMIN')) {
             $idPartenaire = (string) $this->getUser()->getPartenaire()->getId();
             if ($id !== $idPartenaire ) {
@@ -32,5 +34,25 @@ class PartenaireController extends AbstractController
             'permissions' => $permissions
             ]);
     }
+
+    #[Route(path: '/partenaire/{id}/permissions', name:'app_partenaire_permissions', methods: ['POST'])]
+    public function editPartenaire (string $id, Request $request, PartenaireRepository $partenaireRepository): Response
+    {
+        //On vérifie que l'utilisateur a bien le ROLE_CLIENT et que l'id du partenaire correspond
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $idPartenaire = (string) $this->getUser()->getPartenaire()->getId();
+            if ($id !== $idPartenaire ) {
+                return $this->redirectToRoute('app_home', array('error' => 'votre partenaire_id est :' . $idPartenaire));
+            };
+        }
+        $permissions = $request->toArray();
+        $partenaire = $partenaireRepository->find($id);
+        $partenaire->setPermissions( json_encode($permissions));
+        $partenaireRepository->save($partenaire, true);
+
+        return new Response('Tout bon');
+    }
+
+
 
 }

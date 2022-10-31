@@ -8,5 +8,19 @@
         <p>{{ structure.getAddress }}</p>
         <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
         <br>
+        <div>
+            <h4>Permissions spécifiques</h4>
+            {% for key, value in permissions  %}
+                <div class="permissions form-check form-switch">
+                    <input class="perm form-check-input"
+                           type="checkbox"
+                           role="switch"
+                           id={{ key }}
+                            {{ value ? 'checked' : '' }}
+                            {{ not is_granted('ROLE_ADMIN') and not is_granted('ROLE_CLIENT') ? 'disabled' : '' }}>
+                    <label class="form-check-label" for={{ value }}>{{ key }}</label>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
