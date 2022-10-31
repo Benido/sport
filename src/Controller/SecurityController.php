@@ -14,13 +14,14 @@ class SecurityController extends AbstractController
     {
         if ($this->getUser()) {
             $user = $this->getUser();
-            $roles = $user->getRoles();
-            if (in_array("ROLE_USER", $roles)) {
+            if ($this->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('app_panel');
-            } elseif (in_array("ROLE_CLIENT", $roles)) {
-                return $this->redirectToRoute('app_partenaire');
-            } else {
-                return $this->redirectToRoute('app_manager');
+            } elseif ($this->isGranted('ROLE_CLIENT')) {
+                $id = $user->getPartenaire()->getId();
+                return $this->redirectToRoute('app_partenaire', array('id' => $id));
+            } elseif ($this->isGranted('ROLE_MANAGER')) {
+                $id = $user->getStructure()->getId();
+                return $this->redirectToRoute('app_structure', array('id'=> $id));
             }
         }
 

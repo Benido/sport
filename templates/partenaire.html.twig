@@ -3,14 +3,18 @@
 {% block body %}
     <h1>Hello {{ app.user.email }}</h1>
     <div class="container">
+        <div>{{ partenaire.getFranchiseName }} : {{ partenaire.isActive ? '+' : '-' }}</div>
         <div id="searchBlock">Rechercher</div>
         <div id="StructuresDisplayBlock">
             {% for structure in structures %}
-                <div>
-                    <p>{{ structure.Partenaire.getClientName }}</p>
-                    <p>{{ structure.active ? '+' : '-' }}</p>
-                    <br>
-                </div>
+                <a  href={{ path('app_structure', {id: structure.getId}) }}>
+                    <div>
+                        <p>{{ structure.isActive ? '+' : '-' }}</p>
+                        <p>{{ structure.getAddress }}</p>
+                        <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
+                        <br>
+                    </div>
+                </a>
             {% endfor %}
         </div>
     </div>

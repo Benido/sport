@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\PartenairesRepository;
+use App\Repository\PartenaireRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PartenaireRepository::class)]
@@ -16,15 +17,24 @@ class Partenaire
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $clientName = null;
+    private ?string $franchiseName = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $permissions = null;
 
     #[ORM\Column]
     private ?bool $active = null;
 
-    #[ORM\OneToMany(mappedBy: 'Partenaire', targetEntity: Structure::class, orphanRemoval: true)]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $shortDescription = null;
+
+    #[ORM\Column(length: 2000, nullable: true)]
+    private ?string $longDescription = null;
+
+    #[ORM\OneToMany(mappedBy: 'partenaire', targetEntity: Structure::class, orphanRemoval: true)]
     private Collection $structures;
 
-    #[ORM\ManyToOne(inversedBy: 'Partenaire')]
+    #[ORM\OneToOne(mappedBy: 'partenaire', targetEntity: Client::class)]
     private ?Client $client = null;
 
     public function __construct()
@@ -37,14 +47,26 @@ class Partenaire
         return $this->id;
     }
 
-    public function getClientName(): ?string
+    public function getFranchiseName(): ?string
     {
-        return $this->clientName;
+        return $this->franchiseName;
     }
 
-    public function setClientName(string $clientName): self
+    public function setFranchiseName(string $franchiseName): self
     {
-        $this->clientName = $clientName;
+        $this->franchiseName = $franchiseName;
+
+        return $this;
+    }
+
+    public function getPermissions(): ?string
+    {
+        return $this->permissions;
+    }
+
+    public function setPermissions(string $permissions): self
+    {
+        $this->permissions = $permissions;
 
         return $this;
     }
@@ -60,7 +82,29 @@ class Partenaire
 
         return $this;
     }
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
 
+    public function setShortDescription(string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(string $longDescription): self
+    {
+        $this->longDescription = $longDescription;
+
+        return $this;
+    }
     /**
      * @return Collection<int, Structure>
      */

@@ -2,12 +2,14 @@
 
 namespace App\DataFixtures;
 
+require_once 'vendor/autoload.php';
+
+use Faker;
 use App\Entity\Admin;
 use App\Entity\Client;
 use App\Entity\Manager;
 use App\Entity\Partenaire;
 use App\Entity\Structure;
-use App\Entity\Branch;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -23,70 +25,69 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        //Creates two types of user
+        //Set up the random data generator
+        $faker = Faker\Factory::create();
+
+        //Creates an Admin
         $admin = new Admin();
         $admin->setEmail('admin@test.com');
-        $admin->setRoles(["ROLE_USER"]);
+        $admin->setRoles(["ROLE_ADMIN"]);
         $password = $this->hasher->hashPassword($admin, 'password');
         $admin->setPassword($password);
         $manager->persist($admin);
 
-        $client = new Client();
-        $client->setEmail('client@test.com');
-        $client->setRoles(["ROLE_CLIENT"]);
-        $password = $this->hasher->hashPassword($client, 'password');
-        $client->setPassword($password);
-        $manager->persist($client);
-
-        //Creates 6 Partenaires
-
+        //Creates 3 Partenaires and stores them to generate Client accounts
         $partenaires = [];
-        for ($i = 1; $i < 7; $i++) {
+        for ($i = 1; $i < 4; $i++) {
             $partenaire = new Partenaire();
-            $partenaire->setClientName('Partenaire ' . $i);
+            $partenaire->setFranchiseName('Partenaire ' . $i);
             $partenaire->setActive(mt_rand(0, 1));
-            $partenaire->setClient($client);
+            $partenaire->setPermissions(json_encode(randomPerm()));
+            $partenaire->setShortDescription($faker->sentence());
+            $partenaire->setLongDescription($faker->paragraph());
             $manager->persist($partenaire);
-            //$this->addReference('Partenaire_' . $i, $partenaire);
             $partenaires[] = $partenaire;
         }
 
-        //Get the files that contains sample permissions
-        include('permsFixtures.php');
-        $indexTable = [0, 1, 2, 3, 4, 5, 0, 1];
+
+        //Creates 3 Clients,  one for each client previously created
+        foreach ($partenaires as $i => $partenaire) {
+            $client = new Client();
+            $client->setEmail('client' . $i + 1 . '@test.com');
+            $client->setRoles(["ROLE_CLIENT"]);
+            $password = $this->hasher->hashPassword($client, 'password' . $i + 1);
+            $client->setPassword($password);
+            $client->setPartenaire($partenaire);
+            $manager->persist($client);
+            $clients[] = $client;
+        }
+
+        //Creates 15 Structures with random permissions
+        $indexTable = [0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2];
         $structures = [];
-        //Creates 8 Structures
-        foreach($perms as $i => $table) {
+
+        for ($i = 0; $i < 15; $i++) {
             $structure = new Structure();
-            $structure->setInstallName('Structure ' . $i + 1);
-            $structure->setActive(mt_rand(0,1));
-            $structure->setPermissions(json_encode($table));
+            $structure->setAddress($faker->streetAddress());
+            $structure->setPostalCode($i * 1000 + 9000);
+            $structure->setCity($i + 1 . ' test-City');
+            $structure->setActive(mt_rand(0, 1));
+            $structure->setPermissions(json_encode(randomPerm()));
             $structure->setPartenaire($partenaires[$indexTable[$i]]);
             $manager->persist($structure);
             $structures[] = $structure;
-            //$this->addReference('Structure_' . $i, $structure);
         }
 
-        //Creates 12 Branches
-        $branch = null;
-        $iTable = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3];
-        for ($i = 0; $i < 12; $i++) {
-            $branch = new Branch();
-            $branch->setPostalCode($i * 1000 + 9000);
-            $branch->setAddress('test-address');
-            $branch->setCity($i + 1 . ' test-City');
-            $branch->setActive(mt_rand(0, 1));
-            $branch->setStructure($structures[$iTable[$i]]);
-            $manager->persist($branch);
+        //Creates one Manager account for each Structure
+        foreach ($structures as $i => $structure) {
+            $mgr = new Manager();
+            $mgr->setEmail('manager' . $i + 1 .'@test.com');
+            $mgr->setRoles(["ROLE_MANAGER"]);
+            $password = $this->hasher->hashPassword($mgr, 'password' . $i + 1);
+            $mgr->setPassword($password);
+            $mgr->setStructure($structure);
+            $manager->persist($mgr);
         }
-
-        $mgr = new Manager();
-        $mgr->setEmail('manager@test.com');
-        $mgr->setRoles(["ROLE_MANAGER"]);
-        $password = $this->hasher->hashPassword($mgr, 'password');
-        $mgr->setPassword($password);
-        $mgr->setBranch($branch);
-        $manager->persist($mgr);
 
         $manager->flush();
     }

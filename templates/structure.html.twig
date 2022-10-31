@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Hello {{ app.user.email }}</h1>
+    <br>
+    <div>
+        <p>{{ structure.isActive ? '+' : '-' }}</p>
+        <p>{{ structure.getAddress }}</p>
+        <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
+        <br>
+    </div>
+{% endblock %}

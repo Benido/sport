@@ -1,9 +1,13 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>{{ hello }}</h1>
-    <br>
-    <a href={{ path('app_login') }}>log in !</a>
-    <br>
-    <a href="{{ path('app_logout') }}">Déconnexion</a>
+    <h1>Hello {{ app.user.email ?? '' }}</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href={{ path('app_panel')}}>Accédez au panel</a>
+    {% elseif is_granted('ROLE_CLIENT') and not is_granted('ROLE_ADMIN')%}
+    <a href={{ path('app_partenaire', {id: app.user.getPartenaire.getId}) }}>Accédez à votre page partenaire</a>
+    {% elseif is_granted('ROLE_MANAGER') and not is_granted('ROLE_CLIENT') and not is_granted('ROLE_ADMIN')%}
+    <a href={{ path('app_structure', {id: app.user.getStructure.getId}) }}>Accédez à votre page partenaire</a>
+    {% endif %}
+
 {% endblock %}

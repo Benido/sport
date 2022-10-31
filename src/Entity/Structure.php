@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\StructureRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,40 +15,31 @@ class Structure
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?string $installName = null;
-
-    #[ORM\Column]
     private ?bool $active = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 5)]
+    private ?int $postalCode = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $city = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $permissions = null;
 
     #[ORM\ManyToOne(inversedBy: 'structures')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Partenaire $Partenaire = null;
+    private ?Partenaire $partenaire = null;
 
-    #[ORM\OneToMany(mappedBy: 'structure', targetEntity: Branch::class, orphanRemoval: true)]
-    private Collection $branches;
+    #[ORM\OneToOne(mappedBy: 'structure', cascade: ['persist', 'remove'])]
+    private ?Manager $manager = null;
 
-
-    public function __construct()
-    {
-        $this->branches = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getInstallName(): ?string
-    {
-        return $this->installName;
-    }
-
-    public function setInstallName(?string $installName): void
-    {
-        $this->installName = $installName;
     }
 
     public function isActive(): ?bool
@@ -77,47 +66,69 @@ class Structure
         return $this;
     }
 
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(string $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
     public function getPartenaire(): ?Partenaire
     {
-        return $this->Partenaire;
+        return $this->partenaire;
     }
 
-    public function setPartenaire(?Partenaire $Partenaire): self
+    public function setPartenaire(?Partenaire $partenaire): self
     {
-        $this->Partenaire = $Partenaire;
+        $this->partenaire = $partenaire;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Branch>
-     */
-    public function getBranches(): Collection
+    public function getManager(): ?Manager
     {
-        return $this->branches;
+        return $this->manager;
     }
 
-    public function addBranch(Branch $branch): self
+    public function setManager(Manager $manager): self
     {
-        if (!$this->branches->contains($branch)) {
-            $this->branches->add($branch);
-            $branch->setRelation($this);
+        // set the owning side of the relation if necessary
+        if ($manager->getStructure() !== $this) {
+            $manager->setStructure($this);
         }
 
-        return $this;
-    }
-
-    public function removeBranch(Branch $branch): self
-    {
-        if ($this->branches->removeElement($branch)) {
-            // set the owning side to null (unless already changed)
-            if ($branch->getRelation() === $this) {
-                $branch->setRelation(null);
-            }
-        }
+        $this->manager = $manager;
 
         return $this;
     }
-
 
 }

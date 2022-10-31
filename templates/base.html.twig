@@ -16,7 +16,9 @@
     <body>
         {%  include 'header.html.twig' %}
         {% block body %}{% endblock %}
+        <a href={{app.request.headers.get('referer')}}>Retour</a>
         {% block footer %}
+            <br>
             &copy; Copyright 2022 by me
         {% endblock %}
     </body>

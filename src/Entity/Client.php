@@ -5,8 +5,6 @@ namespace App\Entity;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use App\Repository\ClientRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
@@ -18,46 +16,23 @@ class Client extends User
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?Uuid $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Partenaire::class)]
-    private Collection $Partenaire;
-
-    public function __construct()
-    {
-        $this->Partenaire = new ArrayCollection();
-    }
+    #[ORM\OneToOne(inversedBy: 'client', targetEntity: Partenaire::class)]
+    private ?Partenaire $partenaire;
 
     public function getId(): ?Uuid
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, $this->Partenaire>
-     */
-    public function getPartenaire(): Collection
+    public function getPartenaire(): Partenaire
     {
-        return $this->Partenaire;
+        return $this->partenaire;
     }
 
-    public function addPartenaire(Partenaire $partenaire): self
+    public function setPartenaire($partenaire): self
     {
-        if (!$this->Partenaire->contains($partenaire)) {
-            $this->Partenaire->add($partenaire);
-            $partenaire->setClient($this);
-        }
-
+        $this->partenaire = $partenaire;
         return $this;
     }
 
-    public function removePartenaire(Partenaire $partenaire): self
-    {
-        if ($this->Partenaire->removeElement($partenaire)) {
-            // set the owning side to null (unless already changed)
-            if ($partenaire->getClient() === $this) {
-                $partenaire->setClient(null);
-            }
-        }
-
-        return $this;
-    }
 }

@@ -18,21 +18,21 @@ class Manager extends User
 
     #[ORM\OneToOne(inversedBy: 'manager', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Branch $branch = null;
+    private ?Structure $structure = null;
 
     public function getId(): ?Uuid
     {
         return $this->id;
     }
 
-    public function getBranch(): ?Branch
+    public function getStructure(): ?Structure
     {
-        return $this->branch;
+        return $this->structure;
     }
 
-    public function setBranch(Branch $branch): self
+    public function setStructure(Structure $structure): self
     {
-        $this->branch = $branch;
+        $this->structure = $structure;
 
         return $this;
     }

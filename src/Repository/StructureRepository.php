@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Partenaire;
 use App\Entity\Structure;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,17 +40,16 @@ class StructureRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Structure[] Returns an array of Structure objects
+     * @return Object Returns a single object
      */
-    public function findByClientId($value): array
+    public function findByManagerId($value): Object
     {
         return $this->createQueryBuilder('u')
- //           ->from('App\Entity\Structure', 's')
-            ->join('App\Entity\Partenaire', 'p', 'WITH','u.Partenaire = p.id' )
-            ->andWhere('p.client = :val')
+            ->join('App\Entity\Manager', 'm', 'WITH','u.id = m.structure' )
+            ->andWhere('m.id = :val')
             ->setParameter('val', $value, type: 'uuid' )
             ->getQuery()
-            ->getResult()
+            ->getSingleResult()
         ;
     }
 

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Partenaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Cast\Object_;
 
 /**
  * @extends ServiceEntityRepository<Partenaire>
@@ -39,20 +40,20 @@ class PartenaireRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Partenaire[] Returns an array of Partenaire objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Object returns a single Object
+     */
+    public function findByClientId($value): Object
+    {
+        return $this->createQueryBuilder('u')
+            ->join('App\Entity\Client', 'c', 'WITH','u.id = c.partenaire' )
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $value, type: 'uuid' )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
 
 //    public function findOneBySomeField($value): ?Partenaire
 //    {

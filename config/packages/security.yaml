@@ -52,15 +52,15 @@ security:
             provider: master_provider
 
     role_hierarchy:
-        ROLE_CLIENT: ROLE_READER
+        ROLE_CLIENT: ROLE_MANAGER
         ROLE_USER: ROLE_CLIENT
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/panel, roles: ROLE_USER }
-        - { path: ^/client, roles: ROLE_CLIENT }
-        # - { path: ^/manager, roles: ROLE_MANAGER }
+        - { path: ^/panel, roles: ROLE_ADMIN }
+        - { path: ^/partenaire, roles: [ROLE_ADMIN, ROLE_CLIENT] }
+        - { path: ^/structure, roles: [ROLE_ADMIN, ROLE_CLIENT, ROLE_MANAGER] }
 
 when@test:
     security:
