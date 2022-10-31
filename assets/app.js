@@ -17,6 +17,8 @@ const $ = require('jquery');
 require('bootstrap');
 
 import './permissions'
+
+import './search'
 /*
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
