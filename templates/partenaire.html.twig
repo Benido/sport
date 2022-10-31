@@ -1,9 +1,24 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Hello {{ app.user.email }}</h1>
+    <h2>Hello {{ app.user.email }}</h2>
     <div class="container">
-        <div>{{ partenaire.getFranchiseName }} : {{ partenaire.isActive ? '+' : '-' }}</div>
+        <div>
+            <p>{{ partenaire.getFranchiseName }} : {{ partenaire.isActive ? '+' : '-' }}</p>
+            <div>
+                <h4>Permissions par défaut</h4>
+                {% for key, value in permissions  %}
+                <div class="permissions form-check form-switch">
+                    <input class="perm form-check-input"
+                           type="checkbox"
+                           role="switch"
+                           id={{ key }}
+                            {{ value ? 'checked' : '' }}>
+                    <label class="form-check-label" for={{ value }}>{{ key }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
         <div id="searchBlock">Rechercher</div>
         <div id="StructuresDisplayBlock">
             {% for structure in structures %}

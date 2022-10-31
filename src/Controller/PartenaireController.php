@@ -23,11 +23,13 @@ class PartenaireController extends AbstractController
         $partenaire = $partenaireRepo->find($id);
         // On récupère le tableau contenant toutes les instances de Structure reliées à l'instance Partenaire du client
         $structures = $partenaire->getStructures();
+        $permissions = (array) json_decode($partenaire->getPermissions());
 
         // Nous retournons un objet Response auquel nous avons fourni le contenu
         return $this->render('partenaire.html.twig', [
             'partenaire' => $partenaire,
-            'structures' => $structures
+            'structures' => $structures,
+            'permissions' => $permissions
             ]);
     }
 
