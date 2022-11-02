@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-require_once 'vendor/autoload.php';
+//require_once 'vendor/autoload.php';
 
 use Faker;
 use App\Entity\Admin;
@@ -23,6 +23,8 @@ class AppFixtures extends Fixture
         $this->hasher = $hasher;
     }
 
+    //The sample perms that will be added to the Structure classes
+
     public function load(ObjectManager $manager): void
     {
         //Set up the random data generator
@@ -42,7 +44,7 @@ class AppFixtures extends Fixture
             $partenaire = new Partenaire();
             $partenaire->setFranchiseName('Partenaire ' . $i);
             $partenaire->setActive(mt_rand(0, 1));
-            $partenaire->setPermissions(json_encode(randomPerm()));
+            $partenaire->setPermissions(json_encode($this->randomPerm()));
             $partenaire->setShortDescription($faker->sentence());
             $partenaire->setLongDescription($faker->paragraph());
             $manager->persist($partenaire);
@@ -72,7 +74,7 @@ class AppFixtures extends Fixture
             $structure->setPostalCode($i * 1000 + 9000);
             $structure->setCity($i + 1 . ' test-City');
             $structure->setActive(mt_rand(0, 1));
-            $structure->setPermissions(json_encode(randomPerm()));
+            $structure->setPermissions(json_encode($this->randomPerm()));
             $structure->setPartenaire($partenaires[$indexTable[$i]]);
             $manager->persist($structure);
             $structures[] = $structure;
@@ -90,5 +92,21 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public function randomPerm (): array
+    {
+        return [
+            "members_read"=> mt_rand(0, 1),
+            "members_write"=> mt_rand(0, 1),
+            "members_add"=> mt_rand(0, 1),
+            "members_products_add"=> mt_rand(0, 1),
+            "members_payment_schedules"=> mt_rand(0, 1),
+            "members_subscription_read"=> mt_rand(0, 1),
+            "payment_day_read"=> mt_rand(0, 1),
+            "members_statistics_read"=> mt_rand(0, 1),
+            "payment_schedules_read"=> mt_rand(0, 1),
+            "payment_schedules_write"=> mt_rand(0, 1)
+        ];
     }
 }

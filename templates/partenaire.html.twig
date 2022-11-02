@@ -36,24 +36,35 @@
                     <span class="input-group-text">Rechercher par</span>
                     <input id="structureSearchBar" type="text" class="form-control" placeholder="structure_id..." aria-label="Rechercher par structure_id" aria-describedby="input_recherche_structures">
                 </div>
-                <div class="d-grid gap-2 d-md-block">
-                    <button class="btn btn-primary col-4" type="button" data-bs-toggle="button">Actif</button>
-                    <button class="btn btn-primary col-4" type="button" data-bs-toggle="button">Non actif</button>
+                <div class="">
+                    <div class="" >
+                        <label class="btn btn-primary col-4">
+                            <input type="checkbox" id="structureActiveButton" class="btn-check" autocomplete="off"> Actif
+                        </label>
+                        <label class="btn btn-primary col-4">
+                            <input type="checkbox" id="structureInactiveButton" class="btn-check" autocomplete="off"> Inactif
+                        </label>
+                        <button id="showAllStructures" class="btn btn-primary" type="button">Toutes</button>
+                    </div>
+
                 </div>
             </div>
             <div class="d-flex flex-column gap-2 ">
-                <button class="btn btn-primary" type="button">Toutes</button>
-                <button class="btn btn-primary" type="button">Ajouter</button>
+
+                <button class="btn btn-info" type="button">Ajouter</button>
             </div>
         </div>
         <div id="structuresDisplayBlock" class="row row-cols-md-2 row-cols-lg-3 gap-3">
             {% for structure in structures %}
-                <a id={{ structure.getId }} href={{ path('app_structure', {id: structure.getId}) }} class="m-3">
-                    <div class="d-flex flex-column align-items-center">
-                        <button {{ structure.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
-                                type="button"
-                                data-bs-toggle="button"
-                                >{{ structure.isActive ? 'actif' : 'inactif' }}</button>
+                    <div class="structureCard flex-column align-items-center" id={{ structure.getId }}>
+                        <label {{ structure.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
+                        >{{ structure.isActive ? 'actif' : 'inactif' }}
+                            <input type="checkbox"
+                                   id="structureActiveButton"
+                                   class="btn-check"
+                                   autocomplete="off"
+                                   {{ structure.isActive ? 'checked' : ''}}>
+                        </label>
                         <p>{{ structure.getAddress }}</p>
                         <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
                         <br>
