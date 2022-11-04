@@ -5,4 +5,3 @@ $('.structureCard').on('click', function () {
     return false;
 })
 
-

@@ -36,7 +36,7 @@ class PartenaireController extends AbstractController
     }
 
     #[Route(path: '/partenaire/{id}/permissions', name:'app_partenaire_permissions', methods: ['POST'])]
-    public function editPartenaire (string $id, Request $request, PartenaireRepository $partenaireRepository): Response
+    public function editPartenairePermissions (string $id, Request $request, PartenaireRepository $partenaireRepository): Response
     {
         //On vérifie que l'utilisateur a bien le ROLE_CLIENT et que l'id du partenaire correspond
         if (!$this->isGranted('ROLE_ADMIN')) {
@@ -53,6 +53,30 @@ class PartenaireController extends AbstractController
         return new Response('Tout bon');
     }
 
+    #[Route(path: '/partenaire/{id}/isactive', name:'app_partenaire_isactive', methods: ['POST'])]
+    public function editPartenaireActiveState (string $id, Request $request, PartenaireRepository $partenaireRepository): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $idPartenaire = (string) $this->getUser()->getPartenaire()->getId();
+            if ($id !== $idPartenaire ) {
+                return $this->redirectToRoute('app_home', array('error' => 'votre partenaire_id est :' . $idPartenaire));
+            };
+        }
+        //On requête la DB pour modifier le statut actif du partenaire. Ce nouveau statut s'appliquera également aux structures
+        $isActive = $request->request->getBoolean('isActive');
+        $partenaire = $partenaireRepository->find($id);
+        $partenaire->setActive($isActive);
+        $partenaireRepository->save($partenaire, true);
 
+        $structures = $partenaire->getStructures();
+        $permissions = (array) json_decode($partenaire->getPermissions());
+
+        // Nous retournons un objet Response auquel nous avons fourni le contenu
+        return $this->render('partenaire.html.twig', [
+            'partenaire' => $partenaire,
+            'structures' => $structures,
+            'permissions' => $permissions
+        ]);
+    }
 
 }

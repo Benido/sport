@@ -59,6 +59,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/panel, roles: ROLE_ADMIN }
+        - { path: ^/ajouter_structure, roles: ROLE_ADMIN }
         - { path: ^/partenaire, roles: [ROLE_ADMIN, ROLE_CLIENT] }
         - { path: ^/structure, roles: [ROLE_ADMIN, ROLE_CLIENT, ROLE_MANAGER] }
 

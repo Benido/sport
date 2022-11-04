@@ -1,0 +1,27 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div>
+                <a class="navbar-brand" href="{{ path('app_home') }}">Sapik</a>
+                <span class="navbar-text">Hello {{ app.user.email ?? '' }}</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    {% if app.request.pathinfo != path('app_login') %}
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED' ) %}
+                            <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                        {% else %}
+                            <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if app.request.pathinfo != path('app_home') %}
+                        <a class="nav-link" href="{{ path('app_home') }}">Retour à l'accueil</a><br>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

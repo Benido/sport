@@ -9,14 +9,14 @@ function generatePermissionObject () {
 }
 
 permInputs.on('change', function(){
-    console.log(JSON.stringify(generatePermissionObject()))
-    $.ajax({
-        url: window.location.href + '/permissions',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(generatePermissionObject()),
-        success: (data)=> alert(data)
-        }
-    )
-
+    if (confirm('Êtes-vous sûr de changer cette permission par défaut ?')) {
+        $.ajax({
+                url: window.location.href + '/permissions',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(generatePermissionObject()),
+                success: (data) => alert(data)
+            }
+        )
+    }
 } )

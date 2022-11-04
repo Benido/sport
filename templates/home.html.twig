@@ -1,7 +1,6 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Hello {{ app.user.email ?? '' }}</h1>
     {% if is_granted('ROLE_ADMIN') %}
     <a href={{ path('app_panel')}}>Accédez au panel</a>
     {% elseif is_granted('ROLE_CLIENT') and not is_granted('ROLE_ADMIN')%}

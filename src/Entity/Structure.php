@@ -34,6 +34,7 @@ class Structure
     private ?Partenaire $partenaire = null;
 
     #[ORM\OneToOne(mappedBy: 'structure', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Manager $manager = null;
 
 

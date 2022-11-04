@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>validation structure</title>
+</head>
+<body>
+
+<h1>Demande d'autorisation d'accès aux données</h1>
+<p>Conformément à votre demande, la structure suivante est prête à être intégrée au réseau Sapik : </p>
+<p>{{ newStructure.address }}</p>
+<p>{{ newStructure.postalCode }}</p>
+<p>{{ newStructure.city }}</p>
+
+<p>Cliquez-sur ce lien pour valider son autorisation d'accès aux données :</p>
+<a href="/verification_token/{{ token }}">Cliquez ici</a>
+<p>Ce lien expire le {{ expiration_date }}</p>
+
+</body>
+</html>

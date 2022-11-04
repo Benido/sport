@@ -79,6 +79,7 @@ class Partenaire
     public function setActive(bool $active): self
     {
         $this->active = $active;
+        $this->cascadeActiveStatus();
 
         return $this;
     }
@@ -146,4 +147,14 @@ class Partenaire
 
         return $this;
     }
+
+    public function cascadeActiveStatus(): self
+    {
+        foreach($this->getStructures() as $structure) {
+            $structure->setActive($this->isActive());
+        }
+        return $this;
+    }
 }
+
+

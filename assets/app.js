@@ -20,7 +20,8 @@ import './permissions'
 
 import './search'
 
-import './links'
+import './switchActive'
+
 /*
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
