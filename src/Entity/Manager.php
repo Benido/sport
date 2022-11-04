@@ -16,7 +16,7 @@ class Manager extends User
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?Uuid $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'manager', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Structure::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Structure $structure = null;
 

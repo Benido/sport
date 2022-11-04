@@ -22,9 +22,11 @@ $('#ajouterStructureForm').on('submit', function (e) {
                 "address" : $('#address').val(),
                 "postalCode" : $('#postalCode').val(),
                 "city" : $('#city').val(),
-                "permissions" : jsonPermissions
+                "permissions" : jsonPermissions,
+                "partenaireId": $('#inputPartenaireId').val()
             },
             "email": $('#clientEmail').text()
+
         }
         console.log(jsonData)
         $.ajax({

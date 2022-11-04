@@ -33,9 +33,9 @@ class Structure
     #[ORM\JoinColumn(nullable: false)]
     private ?Partenaire $partenaire = null;
 
-    #[ORM\OneToOne(mappedBy: 'structure', cascade: ['persist', 'remove'])]
+/*    #[ORM\OneToOne(mappedBy: 'structure', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Manager $manager = null;
+    private ?Manager $manager = null;   */
 
 
     public function getId(): ?int

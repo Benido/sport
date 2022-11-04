@@ -73,13 +73,16 @@ class AddStructureFormController extends AbstractController
     }
 
     #[Route(path: '/verification_token/{token}', name: 'app_token_verification', methods : ['GET'])]
-    public function tokenVerification($token, JWTService $jwt, StructureRepository $structureRepo): Response
+    public function tokenVerification($token, JWTService $jwt, StructureRepository $structureRepo, PartenaireRepository $partenaireRepo): Response
     {
         //On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
         if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
             // On récupère le payload
             $payload = $jwt->getPayload($token);
             dump($payload);
+            $partenaire = $partenaireRepo->find((int) $payload['partenaireId']);
+
+
 
             // On récupère la structure et on la sauvegarde en db
             $structure = (new Structure())
@@ -87,7 +90,8 @@ class AddStructureFormController extends AbstractController
                 ->setPostalCode((int) $payload['postalCode'])
                 ->setCity($payload['city'])
                 ->setPermissions(json_encode($payload['permissions']))
-                ->setActive('1');
+                ->setActive('1')
+                ->setPartenaire($partenaire);
 
             $structureRepo->save($structure, true);
             $this->addFlash('success', 'Ca a marché !!!');
