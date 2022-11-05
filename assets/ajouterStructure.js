@@ -34,10 +34,16 @@ $('#ajouterStructureForm').on('submit', function (e) {
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(jsonData),
-       //         success: () => {
-        //            $('html').append("<a href='/email_prev' target='_blank' class='d-none'>!</a>").click()
-                  success: (data) =>  {
-                    $('html').html(data)
+                success: (data) => {
+                    //Ouvre un nouvel onglet. Nécessite d'ajouter une exception pour le domaine dans les paramètre du navigateur
+                    //car ils bloquent généralement les pop-ups
+                    const newTab = window.open('about:blank', '_blank')
+                    newTab.document.open()
+                    newTab.document.write(data)
+                    newTab.document.close()
+
+                    //Charge l'html renvoyé par le serveur sur la même page
+                    //$('html').html(data)
                 }
             }
         )
