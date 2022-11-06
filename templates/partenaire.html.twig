@@ -3,6 +3,7 @@
 {% block javascripts %}
     {{ parent() }}
     {{ (is_granted('ROLE_ADMIN') or partenaire.isActive) ? encore_entry_script_tags('links') : '' }}
+    {{ encore_entry_script_tags('searchStructure') }}
 {% endblock %}
 
 {% block body %}
@@ -49,10 +50,10 @@
                 </div>
                 <div class="" >
                     <label class="btn btn-primary col-4">
-                        <input type="checkbox" id="structureActiveButton" class="btn-check" autocomplete="off"> Actif
+                        <input type="checkbox" id="searchActiveStructureButton" class="btn-check" autocomplete="off"> Actif
                     </label>
                     <label class="btn btn-primary col-4">
-                        <input type="checkbox" id="structureInactiveButton" class="btn-check" autocomplete="off"> Inactif
+                        <input type="checkbox" id="searchInactiveStructureButton" class="btn-check" autocomplete="off"> Inactif
                     </label>
                     <button id="showAllStructures" class="btn btn-primary" type="button">Toutes</button>
                 </div>

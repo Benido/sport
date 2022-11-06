@@ -5,3 +5,7 @@ $('.structureCard').on('click', function () {
     return false;
 })
 
+$('.partenaireCard').on('click', function () {
+    window.location = '/partenaire/' + $(this).attr('id')
+    return false;
+})

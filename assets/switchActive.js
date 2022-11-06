@@ -15,3 +15,4 @@ $('#partenaireSetActiveButton').on('change', function () {
         })
     }
 })
+

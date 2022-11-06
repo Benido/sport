@@ -1,19 +1,47 @@
 {% extends "base.html.twig" %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('links') }}
+    {{ encore_entry_script_tags('searchPartenaire') }}
+{% endblock %}
+
 {% block body %}
     <div class="container">
-        <div id="searchBlock">Rechercher</div>
-        <div id="PartenairesDisplayBlock">
+        <h1>Panel</h1>
+        <div id="searchBlock" class="m-5">
+            <div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Rechercher par</span>
+                    <input id="partenaireSearchBar" type="text" class="form-control" placeholder="partenaire_id..." aria-label="Rechercher par structure_id" aria-describedby="input_recherche_structures">
+                </div>
+                <div class="" >
+                    <label class="btn btn-primary col-4">
+                        <input type="checkbox" id="searchActivePartenaireButton" class="btn-check" autocomplete="off"> Actif
+                    </label>
+                    <label class="btn btn-primary col-4">
+                        <input type="checkbox" id="searchInactivePartenaireButton" class="btn-check" autocomplete="off"> Inactif
+                    </label>
+                    <button id="showAllPartenaires" class="btn btn-primary" type="button">Tous</button>
+                </div>
+            </div>
+        </div>
+        <div id="partenairesDisplayBlock" class="row row-cols-2 row-cols-xl-3 gap-1">
             {% for partenaire in partenaires %}
-            <a href={{ path('app_partenaire', {id: partenaire.getId}) }}>
-                <div>
-                    <p>{{ partenaire.isActive ? '+' : '-' }}</p>
+                <div id="{{ partenaire.getId }}" class="partenaireCard p-3" >
                     <p>{{ partenaire.getFranchiseName }}</p>
                     <p>{{ partenaire.getShortDescription }}</p>
+                    <label {{ partenaire.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
+                    >{{ partenaire.isActive ? 'actif' : 'inactif' }}
+                        <input type="checkbox"
+                               id="partenaireSetActiveButton"
+                               class="btn-check"
+                               autocomplete="off"
+                               {{ partenaire.isActive ? 'checked ' : ''}}>
+                    </label>
                     <br>
                 </div>
-            </a>
-                {% endfor %}
+            {% endfor %}
         </div>
     </div>
 

@@ -18,8 +18,6 @@ require('bootstrap');
 
 import './permissions'
 
-import './search'
-
 import './switchActive'
 
 /*

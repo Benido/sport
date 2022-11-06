@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Manager;
+
 use App\Entity\Structure;
 use App\Repository\PartenaireRepository;
 use App\Repository\StructureRepository;
@@ -73,7 +73,7 @@ class AddStructureFormController extends AbstractController
     }
 
     #[Route(path: '/verification_token/{token}', name: 'app_token_verification', methods : ['GET'])]
-    public function tokenVerification($token, JWTService $jwt, StructureRepository $structureRepo, PartenaireRepository $partenaireRepo): Response
+    public function tokenVerification($token, JWTService $jwt, StructureRepository $structureRepo, PartenaireRepository $partenaireRepo, SendEmailService $mail): Response
     {
         //On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
         if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
@@ -95,6 +95,20 @@ class AddStructureFormController extends AbstractController
 
             $structureRepo->save($structure, true);
             $this->addFlash('success', 'Ca a marché !!!');
+
+            /*      //On envoie l'email de confirmation
+                   $email = $partenaire->getClient()->getEmail();
+
+                    $mail->send(
+                    'no-reply@sapik-permissions.com',
+                    $email,
+                    'La nouvelle structure a bien été créée',
+                    'security/confirmationEmail.html.twig',
+                    [
+                        'newStructure' => $structure,
+                    ]);
+           */
+
             return $this->redirectToRoute('app_login');
 
         }
