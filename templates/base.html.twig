@@ -16,10 +16,8 @@
         {% include 'fragments/__flash.html.twig' %}
         {%  include 'fragments/__header.html.twig' %}
         {% block body %}{% endblock %}
-        <a href={{app.request.headers.get('referer')}}>Retour</a>
-        {% block footer %}
-            <br>
+        <footer class="fixed-bottom">
             &copy; Copyright 2022 by me
-        {% endblock %}
+        </footer>
     </body>
 </html>

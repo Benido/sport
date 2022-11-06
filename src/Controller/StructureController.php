@@ -59,4 +59,18 @@ class StructureController extends AbstractController
 
         return new Response('Tout bon');
     }
+
+    #[Route(path: '/structure/{id}/isactive', name:'app_structure_isactive', methods: ['POST'])]
+    public function editPartenaireActiveState (string $id, Request $request, StructureRepository $structureRepository): Response
+    {
+        //On requête la DB pour modifier le statut actif de la structure.
+        $isActive = $request->request->getBoolean('isActive');
+        $structure = $structureRepository->find($id);
+        $structure->setActive($isActive);
+        $structureRepository->save($structure, true);
+
+
+        // Nous retournons un objet Response auquel nous avons fourni le contenu
+        return new Response('Changement statut effectué');
+    }
 }

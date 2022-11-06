@@ -4,10 +4,13 @@ body {
     background-color: lightblue;
 }
 
-.structureCard {
+.structureCard, .partenaireCard {
+    background-color: white;
     display: flex;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.partenaireCard {
-    cursor: pointer;
+.structureCard>label, .partenaireCard>label {
+    z-index: 100000;
 }

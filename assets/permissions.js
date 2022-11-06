@@ -8,8 +8,8 @@ function generatePermissionObject () {
     return permissionsTable
 }
 
-permInputs.on('change', function(){
-    if (confirm('Êtes-vous sûr de changer cette permission par défaut ?')) {
+permInputs.on('change', function(e){
+    if (confirm('Êtes-vous sûr de changer cette permission ?')) {
         $.ajax({
                 url: window.location.href + '/permissions',
                 method: 'POST',
@@ -18,5 +18,9 @@ permInputs.on('change', function(){
                 success: (data) => alert(data)
             }
         )
+    } else {
+        const keepCheckStatus = !$(this).prop('checked')
+        $(this).prop('checked', keepCheckStatus)
+        return false
     }
 } )

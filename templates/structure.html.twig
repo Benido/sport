@@ -1,26 +1,45 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Hello {{ app.user.email }}</h1>
-    <br>
-    <div>
-        <p>{{ structure.isActive ? '+' : '-' }}</p>
-        <p>{{ structure.getAddress }}</p>
-        <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
-        <br>
-        <div>
-            <h4>Permissions spécifiques</h4>
-            {% for key, value in permissions  %}
-                <div class="permissions form-check form-switch">
-                    <input class="perm form-check-input"
-                           type="checkbox"
-                           role="switch"
-                           id={{ key }}
-                            {{ value ? 'checked' : '' }}
-                            {{ not is_granted('ROLE_ADMIN') and not is_granted('ROLE_CLIENT') ? 'disabled' : '' }}>
-                    <label class="form-check-label" for={{ value }}>{{ key }}</label>
+    <div class="container p-3">
+        {% if is_granted('ROLE_CLIENT') or is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-secondary" href='/partenaire/{{ structure.getPartenaire.getId }}'>Retour</a>
+        {% endif %}
+        <h1 class="text-center mb-5">Hello {{ app.user.email }}</h1>
+        <div class="d-flex justify-content-evenly">
+            <div class="d-flex flex-column justify-content-center align-items-center fs-3">
+                <div class="m-3 text-center">
+                    <p>{{ structure.getAddress }}</p>
+                    <p class="text-uppercase">{{ structure.getPostalCode }} {{ structure.getCity }}</p>
                 </div>
-            {% endfor %}
+                <div class="d-flex align-items-center p-3">
+                    <label class="p-3 {{ structure.isActive ? 'btn btn-success' : 'btn btn-warning' }} "
+                    >{{ structure.isActive ? 'actif' : 'inactif' }}
+                        {% if is_granted('ROLE_CLIENT') or is_granted('ROLE_ADMIN') %}
+                        <input type="checkbox"
+                               id="{{ structure.getId }}"
+                               class="structureSetActiveButton btn-check"
+                               autocomplete="off"
+                                {{ structure.isActive ? 'checked' : ''}}>
+                        {% endif %}
+                    </label>
+                </div>
+            </div>
+            <div>
+                <h4>Permissions spécifiques</h4>
+                {% for key, value in permissions  %}
+                    <div class="permissions form-check form-switch">
+                        <input class="perm form-check-input"
+                               type="checkbox"
+                               role="switch"
+                               id={{ key }}
+                                {{ value ? 'checked' : '' }}
+                                {{ not is_granted('ROLE_ADMIN') and not is_granted('ROLE_CLIENT') ? 'disabled' : '' }}>
+                        <label class="form-check-label" for={{ value }}>{{ key }}</label>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

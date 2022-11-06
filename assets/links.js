@@ -1,11 +1,16 @@
 //Gère les évènements onClick des cartes partenaires et structure
 
-$('.structureCard').on('click', function () {
-    window.location = '/structure/' + $(this).attr('id')
-    return false;
+$('.structureCard').not('label').on('click', function (e) {
+    if(!$(e.target).is('label, input')) {
+        window.location = '/structure/' + $(this).attr('id')
+        return false;
+    }
 })
 
-$('.partenaireCard').on('click', function () {
-    window.location = '/partenaire/' + $(this).attr('id')
-    return false;
+$('.partenaireCard').not('label').on('click', function (e) {
+    if(!$(e.target).is('label, input')) {
+        window.location = '/partenaire/' + $(this).attr('id')
+        return false;
+
+    }
 })
