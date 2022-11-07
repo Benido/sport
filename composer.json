@@ -16,6 +16,7 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.1.*",
         "symfony/mailer": "6.1.*",
+        "symfony/monolog-bundle": "^3.8",
         "symfony/proxy-manager-bridge": "6.1.*",
         "symfony/runtime": "6.1.*",
         "symfony/security-bundle": "6.1.*",
@@ -83,7 +84,6 @@
         "fakerphp/faker": "^1.20",
         "symfony/debug-bundle": "6.1.*",
         "symfony/maker-bundle": "^1.47",
-        "symfony/monolog-bundle": "^3.0",
         "symfony/stopwatch": "6.1.*",
         "symfony/web-profiler-bundle": "6.1.*"
     }
