@@ -1,6 +1,11 @@
 (Cette application est développée dans le cadre de la formation Développeur Web - Web Mobile de Studi)
-# En chantier #
+# SAPIK #
+
+**En chantier**
+
 Application déployée sur Heroku \>  https://sapik.herokuapp.com/](https://sapik.herokuapp.com/)
+
+Une application de gestion d'autorisations d'accès à une API externe
 
 Cette application utilise le SGBD MariaDB
 
