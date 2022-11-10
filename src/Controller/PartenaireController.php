@@ -63,13 +63,17 @@ class PartenaireController extends AbstractController
                 return $this->redirectToRoute('app_home', array('error' => 'votre partenaire_id est :' . $idPartenaire));
             };
         }
-        //On requête la DB pour modifier le statut actif du partenaire. Ce nouveau statut s'appliquera également aux structures
+        //On modifie le statut actif du partenaire dans la DB.
         $isActive = $request->request->getBoolean('isActive');
         $partenaire = $partenaireRepository->find($id);
         $partenaire->setActive($isActive);
         $partenaireRepository->save($partenaire, true);
 
+        //Ce nouveau statut s'appliquera également aux structures
         $structures = $partenaire->getStructures();
+        foreach ($structures as $structure) {
+            $structure->setActive($isActive);
+        }
         $permissions = (array) json_decode($partenaire->getPermissions());
 
         // Nous retournons un objet Response auquel nous avons fourni le contenu
