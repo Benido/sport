@@ -42,7 +42,7 @@ class StructureController extends AbstractController
     }
 
     #[Route(path: '/structure/{id}/permissions', name:'app_structure_permissions', methods: ['POST'])]
-    public function editPartenaire (string $id, Request $request, StructureRepository $partenaireRepository): Response
+    public function editStructure (string $id, Request $request, StructureRepository $structureRepository): Response
     {
         //On vérifie que l'utilisateur a bien le ROLE_CLIENT et que l'id du partenaire correspond
        /* if (!$this->isGranted('ROLE_ADMIN')) {
@@ -53,11 +53,11 @@ class StructureController extends AbstractController
         }
        */
         $permissions = $request->toArray();
-        $partenaire = $partenaireRepository->find($id);
-        $partenaire->setPermissions( json_encode($permissions));
-        $partenaireRepository->save($partenaire, true);
+        $structure = $structureRepository->find($id);
+        $structure->setPermissions( json_encode($permissions));
+        $structureRepository->save($structure, true);
 
-        return new Response('Tout bon');
+        return new Response('Permissions modifiées pour ');
     }
 
     #[Route(path: '/structure/{id}/isactive', name:'app_structure_isactive', methods: ['POST'])]

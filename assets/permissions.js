@@ -1,5 +1,6 @@
 const permInputs = $('.permissions').children('input')
 
+//On génère un fichier JSON contenant les permissions
 function generatePermissionObject () {
     let permissionsTable = {}
     permInputs.each(function () {
@@ -8,7 +9,7 @@ function generatePermissionObject () {
     return permissionsTable
 }
 
-permInputs.on('change', function(e){
+permInputs.on('change', function(){
     if (confirm('Êtes-vous sûr de changer cette permission ?')) {
         $.ajax({
                 url: window.location.href + '/permissions',
