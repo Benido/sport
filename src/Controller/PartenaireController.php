@@ -18,7 +18,7 @@ class PartenaireController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN')) {
             $idPartenaire = (string) $this->getUser()->getPartenaire()->getId();
             if ($id !== $idPartenaire ) {
-                return $this->redirectToRoute('app_home', array('error' => 'votre partenaire_id est :' . $idPartenaire));
+                return $this->redirectToRoute('app_login', array('error' => 'votre partenaire_id est :' . $idPartenaire));
             };
         }
 
@@ -42,7 +42,8 @@ class PartenaireController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN')) {
             $idPartenaire = (string) $this->getUser()->getPartenaire()->getId();
             if ($id !== $idPartenaire ) {
-                return $this->redirectToRoute('app_home', array('error' => 'votre partenaire_id est :' . $idPartenaire));
+                $this->addFlash('danger', 'Vous ne pouvez pas accéder à cette page, votre partenaire_id est :' . $idPartenaire);
+                return $this->redirectToRoute('app_login');
             };
         }
         // On récupère l'objet permissions en JSON depuis la requête, et on le passe au partenaire correspondant à l'id
