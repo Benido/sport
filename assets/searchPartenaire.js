@@ -6,7 +6,7 @@ const searchInactivePartenaireBtn = $('#searchInactivePartenaireButton')
 const partenaireCard = $('.partenaireCard')
 
 //On crée un state dans lequel on stocke la sélection sortie par la barre de recherche
-//Montre tous les partenaires par défaut
+//Au chargement de la page, montre tous les partenaires
 let searchSelection = partenaireCard
 
 function checkIfActive (selection) {

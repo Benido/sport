@@ -36,7 +36,6 @@ class AddStructureFormController extends AbstractController
     public function sendValidationEmail (Request $request, SendEmailService $mail, JWTService $jwt)
     {
             $newStructureJson = $request->toArray();
-            dump($request);
 
             //On extrait les données concernant la nouvelle structure
             $newStructure = $newStructureJson['structure'];
@@ -51,7 +50,7 @@ class AddStructureFormController extends AbstractController
             $payload = $newStructure;
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'), 604800);
 
-           /* $mail->send(
+           /*$mail->send(
                 'no-reply@sapik-permissions.com',
                 $email,
                 'Création d\'une nouvelle structure',
@@ -61,7 +60,7 @@ class AddStructureFormController extends AbstractController
                     'newStructure' => $newStructure,
                     'token' => $token
                 ]);
-           */
+                */
 
             return $this->render('security/validationEmail.html.twig', [
                 'expiration_date' => (new \DateTime('+7 days'))->format('d-m-Y'),
@@ -79,10 +78,7 @@ class AddStructureFormController extends AbstractController
         if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
             // On récupère le payload
             $payload = $jwt->getPayload($token);
-            dump($payload);
             $partenaire = $partenaireRepo->find((int) $payload['partenaireId']);
-
-
 
             // On récupère la structure et on la sauvegarde en db
             $structure = (new Structure())
@@ -92,9 +88,9 @@ class AddStructureFormController extends AbstractController
                 ->setPermissions(json_encode($payload['permissions']))
                 ->setActive('1')
                 ->setPartenaire($partenaire);
-
             $structureRepo->save($structure, true);
-            $this->addFlash('success', 'Ca a marché !!!');
+
+            $this->addFlash('success', 'La nouvelle structure a bien été créée');
 
             /*      //On envoie l'email de confirmation
                    $email = $partenaire->getClient()->getEmail();

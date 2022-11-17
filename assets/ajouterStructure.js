@@ -28,7 +28,6 @@ $('#ajouterStructureForm').on('submit', function (e) {
             "email": $('#clientEmail').text()
 
         }
-        console.log(jsonData)
         $.ajax({
                 url: '/validation_structure',
                 method: 'POST',
