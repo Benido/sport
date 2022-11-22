@@ -33,7 +33,7 @@
         </div>
         <div id="partenairesDisplayBlock" class="row row-cols-1 row-cols-md-2 g-2">
             {% for partenaire in partenaires %}
-                <div id="{{ partenaire.getId }}" class="partenaireCard col  ">
+                <div id="{{ partenaire.getId }}" class="partenaireCard col">
                     <div class=" entityCard flex-column align-items-center p-3">
                         <p>{{ partenaire.getFranchiseName }}</p>
                         <p>{{ partenaire.getShortDescription }}</p>

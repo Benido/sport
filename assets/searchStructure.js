@@ -12,18 +12,18 @@ let searchSelection = structureCard
 function checkIfActive(selection) {
     if(searchActiveStructureBtn.is(':checked')) {
         //On cache les cartes contenant un bouton inactif
-        selection.find(".btn-warning").parent('.structureCard').hide()
+        selection.find(".btn-warning").parents('.structureCard').hide()
     } else {
-        selection.find(".btn-warning").parent('.structureCard').show()
+        selection.find(".btn-warning").parents('.structureCard').show()
     }
 }
 
 function checkIfInactive(selection) {
     if(searchInactiveStructureBtn.is(':checked')) {
         //On cache les cartes contenant un bouton inactif
-        selection.find(".btn-success").parent('.structureCard').hide()
+        selection.find(".btn-success").parents('.structureCard').hide()
     } else {
-        selection.find(".btn-success").parent('.structureCard').show()
+        selection.find(".btn-success").parents('.structureCard').show()
     }
 }
 

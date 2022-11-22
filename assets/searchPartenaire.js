@@ -12,18 +12,18 @@ let searchSelection = partenaireCard
 function checkIfActive (selection) {
     if(searchActivePartenaireBtn.is(':checked')) {
         //On cache les cartes contenant un bouton inactif
-        selection.find(".btn-warning").parent('.partenaireCard').hide()
+        selection.find(".btn-warning").parents('.partenaireCard').hide()
     } else {
-        selection.find(".btn-warning").parent('.partenaireCard').show()
+        selection.find(".btn-warning").parents('.partenaireCard').show()
     }
 }
 
 function checkIfInactive (selection) {
     if(searchInactivePartenaireBtn.is(':checked')) {
         //On cache les cartes contenant un bouton inactif
-        selection.find(".btn-success").parent('.partenaireCard').hide()
+        selection.find(".btn-success").parents('.partenaireCard').hide()
     } else {
-        selection.find(".btn-success").parent('.partenaireCard').show()
+        selection.find(".btn-success").parents('.partenaireCard').show()
     }
 }
 
@@ -44,14 +44,14 @@ $('#partenaireSearchBar').on('input', function() {
         $('#partenairesDisplayBlock').children().hide()
         searchSelection = $(`[id^="${$(this).val()}"]`)
         searchSelection.show()
-        checkIfActive(searchActivePartenaireBtn, searchSelection)
-        checkIfInactive(searchInactivePartenaireBtn, searchSelection)
+        checkIfActive(searchSelection)
+        checkIfInactive(searchSelection)
     } else {
         //On s'assure que la liste réapparaisse quand l'utilisateur efface son entrée
         searchSelection = $('.partenaireCard')
         searchSelection.show()
-        checkIfActive(searchActivePartenaireBtn, searchSelection)
-        checkIfInactive(searchInactivePartenaireBtn, searchSelection)
+        checkIfActive(searchSelection)
+        checkIfInactive(searchSelection)
     }
 } )
 
@@ -71,7 +71,7 @@ $('#showAllPartenaires').on('click', function() {
     //On remet à zéro tous les filtres de recherche
     searchSelection = partenaireCard
     partenaireCard.show()
-    $('#partenaireActiveButton, #partenaireInactiveButton')
+    $('#searchActivePartenaireButton, #searchInactivePartenaireButton')
         .prop('checked', false)
         .parent()
         .removeClass('active')

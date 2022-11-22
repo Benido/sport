@@ -7,16 +7,16 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container h-75 p-3">
+    <div class="container">
         <div>
             {% if is_granted('ROLE_ADMIN') %}
-            <a class="btn btn-secondary" href='/panel'>Retour</a>
+            <a class="btn btn-secondary float-end my-3" href='/panel'>Retour</a>
             {% endif %}
             <h1 class="text-center mb-5">Page partenaire</h1>
-            <div class="d-flex m-3">
-                <h2 class="m-3">{{ partenaire.getFranchiseName }} : </h2>
+            <div class="d-flex my-3">
+                <h2 class="my-3">{{ partenaire.getFranchiseName }} : </h2>
                 <div class="d-flex align-items-center">
-                    <label {{ partenaire.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
+                    <label {{ partenaire.isActive ? "class= 'btn btn-success mx-3' " : "class= 'btn btn-warning mx-3' " }}
                     >{{ partenaire.isActive ? 'actif' : 'inactif' }}
                         <input type="checkbox"
                                class="partenaireSetActiveButton btn-check"
@@ -27,12 +27,11 @@
                     </label>
                 </div>
             </div>
-            <div class="d-grid">
-                <div class="row">
+            <div class="row">
                 <h4>Permissions par défaut</h4>
-                </div>
-                <div class="row row-cols-3 row-cols-lg-4">
-                {% for key, value in permissions  %}
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 mx-5 mx-sm-auto mt-1">
+                {% for key, value in permissions %}
                     <div class="permissions col form-check form-switch">
                         <input class="perm form-check-input"
                                type="checkbox"
@@ -43,44 +42,49 @@
                         <label class="form-check-label" for={{ value }}>{{ key }}</label>
                     </div>
                 {% endfor %}
-                </div>
             </div>
         </div>
-        <div class="d-flex h-50 p-3 m-3">
-            <div class="d-flex flex-column me-3">
+        <div class="row my-5 ">
+            <div class="{{ is_granted('ROLE_ADMIN') ? 'col-12 col-sm-10' : 'col' }}">
                 <div class="input-group mb-3">
                     <span class="input-group-text">Rechercher par</span>
-                    <input id="structureSearchBar" type="text" class="form-control" placeholder="structure_id..." aria-label="Rechercher par structure_id" aria-describedby="input_recherche_structures">
+                    <input id="structureSearchBar" type="text" class="form-control" placeholder="structure_id..."
+                           aria-label="Rechercher par structure_id" aria-describedby="input_recherche_structures">
                 </div>
-                <div class="" >
-                    <label class="btn btn-primary col-4">
-                        <input type="checkbox" id="searchActiveStructureButton" class="btn-check" autocomplete="off"> Actif
+                <div class="row gap-2 g-0">
+                    <label class="btn btn-primary col">
+                        <input type="checkbox" id="searchActiveStructureButton" class="btn-check" autocomplete="off">
+                        Actif
                     </label>
-                    <label class="btn btn-primary col-4">
-                        <input type="checkbox" id="searchInactiveStructureButton" class="btn-check" autocomplete="off"> Inactif
+                    <label class="btn btn-primary col">
+                        <input type="checkbox" id="searchInactiveStructureButton" class="btn-check" autocomplete="off">
+                        Inactif
                     </label>
-                    <button id="showAllStructures" class="btn btn-primary" type="button">Toutes</button>
+                    <button id="showAllStructures" class="btn btn-primary col" type="button">Toutes</button>
                 </div>
             </div>
             {% if is_granted('ROLE_ADMIN') %}
-            <div class="d-flex flex-column gap-2 ">
-                <a href="/ajouter_structure/{{ partenaire.getId }}" id="addStructureBtn" class="btn btn-info" type="button">Ajouter</a>
-            </div>
+                <div class="d-flex justify-content-center col col-sm-2 mt-3 mb-3 mb-sm-5 ">
+                    <a href="/ajouter_structure/{{ partenaire.getId }}" id="addStructureBtn"
+                       class="btn btn-info btn-lg d-block" type="button">Ajouter
+                    </a>
+                </div>
             {% endif %}
         </div>
-        <div id="structuresDisplayBlock" class="row row-cols-md-2 row-cols-lg-3 gap-3">
+        <div id="structuresDisplayBlock" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2">
             {% for structure in structures %}
-                    <div class="structureCard flex-column align-items-center p-3" id={{ structure.getId }} >
-                        <label {{ structure.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
-                        >{{ structure.isActive ? 'actif' : 'inactif' }}
-                            <input type="checkbox"
-                                   class="structureSetActiveButton btn-check"
-                                   autocomplete="off"
-                                   {{ structure.isActive ? 'checked' : ''}}>
-                        </label>
-                        <p>{{ structure.getAddress }}</p>
-                        <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
-                        <br>
+                    <div class="structureCard col" id={{ structure.getId }}>
+                        <div class="entityCard flex-column align-items-center p-3">
+                            <p>{{ structure.getAddress }}</p>
+                            <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
+                            <label {{ structure.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
+                            >{{ structure.isActive ? 'actif' : 'inactif' }}
+                                <input type="checkbox"
+                                       class="structureSetActiveButton btn-check"
+                                       autocomplete="off"
+                                        {{ structure.isActive ? 'checked' : ''}}>
+                            </label>
+                        </div>
                     </div>
             {% endfor %}
         </div>
