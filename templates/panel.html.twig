@@ -9,37 +9,43 @@
 {% block body %}
     <div class="container">
         <h1 class="text-center mb-5">Panel</h1>
-        <div id="searchBlock" class="m-5">
-            <div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Rechercher par</span>
-                    <input id="partenaireSearchBar" type="text" class="form-control" placeholder="partenaire_id..." aria-label="Rechercher par structure_id" aria-describedby="input_recherche_structures">
-                </div>
-                <div class="" >
-                    <label class="btn btn-primary col-4">
-                        <input type="checkbox" id="searchActivePartenaireButton" class="btn-check" autocomplete="off"> Actif
-                    </label>
-                    <label class="btn btn-primary col-4">
-                        <input type="checkbox" id="searchInactivePartenaireButton" class="btn-check" autocomplete="off"> Inactif
-                    </label>
-                    <button id="showAllPartenaires" class="btn btn-primary" type="button">Tous</button>
-                </div>
+        <div id="searchBlock" class="my-5">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Rechercher par</span>
+                <input id="partenaireSearchBar" type="text" class="form-control" placeholder="partenaire_id..."
+                       aria-label="Rechercher par structure_id" aria-describedby="input_recherche_structures">
+            </div>
+            <div class="row gap-2 g-0">
+                <label class="btn btn-primary col">
+                    <input type="checkbox"
+                           id="searchActivePartenaireButton"
+                           class="btn-check"
+                           autocomplete="off">actif
+                </label>
+                <label class="btn btn-primary col">
+                    <input type="checkbox"
+                           id="searchInactivePartenaireButton"
+                           class="btn-check"
+                           autocomplete="off">inactif
+                </label>
+                <button id="showAllPartenaires" class="btn btn-primary col" type="button">tous</button>
             </div>
         </div>
-        <div id="partenairesDisplayBlock" class="row row-cols-2 row-cols-xl-3 gap-1">
+        <div id="partenairesDisplayBlock" class="row row-cols-1 row-cols-md-2 g-2">
             {% for partenaire in partenaires %}
-                <div id="{{ partenaire.getId }}" class="partenaireCard flex-column align-items-center p-3" >
-                    <p>{{ partenaire.getFranchiseName }}</p>
-                    <p>{{ partenaire.getShortDescription }}</p>
-                    <label {{ partenaire.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
-                    >{{ partenaire.isActive ? 'actif' : 'inactif' }}
-                        <input type="checkbox"
-                               id="partenaireSetActiveButton"
-                               class="btn-check"
-                               autocomplete="off"
-                               {{ partenaire.isActive ? 'checked ' : ''}}>
-                    </label>
-                    <br>
+                <div id="{{ partenaire.getId }}" class="partenaireCard col  ">
+                    <div class=" entityCard flex-column align-items-center p-3">
+                        <p>{{ partenaire.getFranchiseName }}</p>
+                        <p>{{ partenaire.getShortDescription }}</p>
+                        <label {{ partenaire.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
+                        >{{ partenaire.isActive ? 'actif' : 'inactif' }}
+                            <input type="checkbox"
+                                   id="partenaireSetActiveButton"
+                                   class="btn-check"
+                                   autocomplete="off"
+                                   {{ partenaire.isActive ? 'checked ' : '' }}>
+                        </label>
+                    </div>
                 </div>
             {% endfor %}
         </div>
