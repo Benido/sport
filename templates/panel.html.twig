@@ -9,36 +9,36 @@
 {% block body %}
     <div class="container">
         <h1 class="text-center fw-light fs-3 mt-3 mb-5">Panel</h1>
-        <div id="searchBlock" class=" rounded bg-light my-4 p-3">
-            <div class="input-group mb-3">
+        <div id="searchBlock" class=" rounded bg-light my-4 p-3 shadow-sm">
+            <div class="input-group mb-3 shadow-sm">
                 <span class="input-group-text">Rechercher par</span>
                 <input id="partenaireSearchBar" type="text" class="form-control" placeholder="partenaire_id..."
                        aria-label="Rechercher par structure_id" aria-describedby="input_recherche_structures">
             </div>
             <div class="row gap-2 g-0">
-                <label class="btn btn-primary col">
+                <label class="btn btn-primary col shadow-sm">
                     <input type="checkbox"
                            id="searchActivePartenaireButton"
                            class="btn-check"
                            autocomplete="off">actif
                 </label>
-                <label class="btn btn-primary col">
+                <label class="btn btn-primary col shadow-sm">
                     <input type="checkbox"
                            id="searchInactivePartenaireButton"
                            class="btn-check"
                            autocomplete="off">inactif
                 </label>
-                <button id="showAllPartenaires" class="btn btn-primary col" type="button">tous</button>
+                <button id="showAllPartenaires" class="btn btn-primary col shadow-sm" type="button">tous</button>
             </div>
         </div>
-        <div id="partenairesDisplayBlock" class="row row-cols-1 row-cols-md-2 g-2 rounded bg-light p-3">
+        <div id="partenairesDisplayBlock" class="row row-cols-1 row-cols-md-2 g-2 rounded bg-light p-3 shadow-sm">
             {% for partenaire in partenaires %}
                 <div id="{{ partenaire.getId }}" class="partenaireCard col">
-                    <div class=" entityCard flex-column align-items-center p-3 {{ partenaire.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">
+                    <div class=" entityCard flex-column align-items-center p-3 shadow-sm {{ partenaire.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">
                         <p>{{ partenaire.getFranchiseName }}</p>
                         <p>{{ partenaire.getShortDescription }}</p>
-                        <label {{ partenaire.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
-                        >{{ partenaire.isActive ? 'actif' : 'inactif' }}
+                        <label class="shadow-sm {{ partenaire.isActive ? 'btn btn-success' : 'btn btn-warning' }}">
+                            {{ partenaire.isActive ? 'actif' : 'inactif' }}
                             <input type="checkbox"
                                    id="partenaireSetActiveButton"
                                    class="btn-check"

@@ -10,17 +10,17 @@
     <div class="container">
         <div>
             {% if is_granted('ROLE_ADMIN') %}
-                <a class="btn btn-secondary float-end" href='/panel'>Retour</a>
+                <a class="btn btn-secondary float-end shadow-sm" href='/panel'>Retour</a>
             {% endif %}
             <h1 class="text-center fw-light fs-3 mt-3 mb-5">Page partenaire</h1>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 my-3 mx-0 rounded bg-light p-3">
+        <div class="row row-cols-1 row-cols-sm-2 my-3 mx-0 rounded bg-light p-3 shadow-sm">
             <div class="col align-items-center">
                 <div class="d-flex align-items-center justify-content-center h-100">
                     <h2 class="fw-light fs-3 my-3">{{ partenaire.getFranchiseName }} : </h2>
                     <div class="">
-                        <label {{ partenaire.isActive ? "class= 'btn btn-success mx-3' " : "class= 'btn btn-warning mx-3' " }}
-                        >{{ partenaire.isActive ? 'actif' : 'inactif' }}
+                        <label class=" mx-3 shadow-sm {{ partenaire.isActive ?  'btn btn-success mx-3' : 'btn btn-warning' }}">
+                        {{ partenaire.isActive ? 'actif' : 'inactif' }}
                             <input type="checkbox"
                                    class="partenaireSetActiveButton btn-check"
                                    autocomplete="off"
@@ -36,7 +36,7 @@
                 <p class="fw-light">{{ partenaire.getLongDescription }}</p>
             </div>
         </div>
-        <div class="rounded bg-light p-3">
+        <div class="rounded bg-light p-3 shadow-sm">
             <h4 class="fw-light fs-4">Permissions par défaut</h4>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 mx-5 mx-sm-auto mt-1">
                 {% for key, value in permissions %}
@@ -52,23 +52,23 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="row my-4 rounded bg-light p-3 mx-0">
+        <div class="row my-4 rounded bg-light p-3 mx-0 shadow-sm">
             <div class="{{ is_granted('ROLE_ADMIN') ? 'col-12 col-sm-10' : 'col' }}">
                 <div class="input-group mb-3">
                     <span class="input-group-text">Rechercher par</span>
-                    <input id="structureSearchBar" type="text" class="form-control" placeholder="structure_id..."
+                    <input id="structureSearchBar" type="text" class="form-control shadow-sm" placeholder="structure_id..."
                            aria-label="Rechercher par structure_id" aria-describedby="input_recherche_structures">
                 </div>
                 <div class="row gap-2 g-0">
-                    <label class="btn btn-primary col">
+                    <label class="btn btn-primary col shadow-sm">
                         <input type="checkbox" id="searchActiveStructureButton" class="btn-check" autocomplete="off">
                         Actif
                     </label>
-                    <label class="btn btn-primary col">
+                    <label class="btn btn-primary col shadow-sm">
                         <input type="checkbox" id="searchInactiveStructureButton" class="btn-check" autocomplete="off">
                         Inactif
                     </label>
-                    <button id="showAllStructures" class="btn btn-primary col" type="button">Toutes</button>
+                    <button id="showAllStructures" class="btn btn-primary col shadow-sm" type="button">Toutes</button>
                 </div>
             </div>
             {% if is_granted('ROLE_ADMIN') %}
@@ -79,14 +79,14 @@
                 </div>
             {% endif %}
         </div>
-        <div id="structuresDisplayBlock" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2 rounded bg-light p-3">
+        <div id="structuresDisplayBlock" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2 rounded bg-light p-3 shadow-sm">
             {% for structure in structures %}
                     <div class="structureCard col" id={{ structure.getId }}>
-                        <div class="entityCard flex-column align-items-center p-3 {{ structure.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">
+                        <div class="entityCard flex-column align-items-center p-3 shadow-sm {{ structure.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">
                             <p>{{ structure.getAddress }}</p>
                             <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
-                            <label {{ structure.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}
-                            >{{ structure.isActive ? 'actif' : 'inactif' }}
+                            <label class="shadow-sm {{ structure.isActive ? 'btn btn-success' : 'btn btn-warning' }}">
+                                {{ structure.isActive ? 'actif' : 'inactif' }}
                                 <input type="checkbox"
                                        class="structureSetActiveButton btn-check"
                                        autocomplete="off"
