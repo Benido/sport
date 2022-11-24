@@ -5,10 +5,11 @@
                 <a class="navbar-brand" href="{{ path('app_home') }}">Sapik</a>
                 <span class="navbar-text ms-3">Bonjour {{ app.user.email ?? '' }}</span>
             </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#hamburgerMenu"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="menu hamburger">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse justify-content-end" id="hamburgerMenu">
                 <div class="navbar-nav">
                     {% if app.request.pathinfo != path('app_login') %}
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED' ) %}

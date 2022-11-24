@@ -8,8 +8,8 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="text-center mb-5">Panel</h1>
-        <div id="searchBlock" class="my-5">
+        <h1 class="text-center fw-light fs-3 mt-3 mb-5">Panel</h1>
+        <div id="searchBlock" class=" rounded bg-light my-4 p-3">
             <div class="input-group mb-3">
                 <span class="input-group-text">Rechercher par</span>
                 <input id="partenaireSearchBar" type="text" class="form-control" placeholder="partenaire_id..."
@@ -31,10 +31,10 @@
                 <button id="showAllPartenaires" class="btn btn-primary col" type="button">tous</button>
             </div>
         </div>
-        <div id="partenairesDisplayBlock" class="row row-cols-1 row-cols-md-2 g-2">
+        <div id="partenairesDisplayBlock" class="row row-cols-1 row-cols-md-2 g-2 rounded bg-light p-3">
             {% for partenaire in partenaires %}
                 <div id="{{ partenaire.getId }}" class="partenaireCard col">
-                    <div class=" entityCard flex-column align-items-center p-3">
+                    <div class=" entityCard flex-column align-items-center p-3 {{ partenaire.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">
                         <p>{{ partenaire.getFranchiseName }}</p>
                         <p>{{ partenaire.getShortDescription }}</p>
                         <label {{ partenaire.isActive ? "class= 'btn btn-success' " : "class= 'btn btn-warning' " }}

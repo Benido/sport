@@ -14,3 +14,11 @@ body {
 .entityCard>label {
     z-index: 100000;
 }
+
+.backgroundGreen {
+    background-color: rgba(40, 167, 69, 0.3) ;
+}
+
+.backgroundYellow {
+    background-color: rgba(255, 193, 7, 0.3);
+}
