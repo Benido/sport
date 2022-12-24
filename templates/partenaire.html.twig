@@ -40,14 +40,14 @@
             <h4 class="fw-light fs-4">Permissions par défaut</h4>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 mx-5 mx-sm-auto mt-1">
                 {% for key, value in permissions %}
-                    <div class="permissions col form-check form-switch">
-                        <input class="perm form-check-input"
+                    <div class="permissions col form-check form-switch d-flex align-items-center">
+                        <input class="perm form-check-input me-2"
                                type="checkbox"
                                role="switch"
                                id={{ key }}
                                     {{ value ? 'checked' : '' }}
                                 {{ (is_granted('ROLE_ADMIN') or partenaire.isActive) ? '' : 'disabled' }}>
-                        <label class="form-check-label" for={{ value }}>{{ key }}</label>
+                        <label class="form-check-label text-secondary" for={{ value }}>{{ key }}</label>
                     </div>
                 {% endfor %}
             </div>
@@ -83,8 +83,9 @@
             {% for structure in structures %}
                     <div class="structureCard col" id={{ structure.getId }}>
                         <div class="entityCard flex-column align-items-center p-3 shadow-sm {{ structure.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">
-                            <p>{{ structure.getAddress }}</p>
-                            <p>{{ structure.getPostalCode }} {{ structure.getCity }}</p>
+                            <p>Salle {{ structure.getId }}</p>
+                            <p class="fw-light">{{ structure.getAddress }}</p>
+                            <p class="fw-light">{{ structure.getPostalCode }} {{ structure.getCity }}</p>
                             <label class="shadow-sm {{ structure.isActive ? 'btn btn-success' : 'btn btn-warning' }}">
                                 {{ structure.isActive ? 'actif' : 'inactif' }}
                                 <input type="checkbox"

@@ -36,7 +36,7 @@
                 <div id="{{ partenaire.getId }}" class="partenaireCard col">
                     <div class=" entityCard flex-column align-items-center p-3 shadow-sm {{ partenaire.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">
                         <p>{{ partenaire.getFranchiseName }}</p>
-                        <p>{{ partenaire.getShortDescription }}</p>
+                        <p class="fw-light">{{ partenaire.getShortDescription }}</p>
                         <label class="shadow-sm {{ partenaire.isActive ? 'btn btn-success' : 'btn btn-warning' }}">
                             {{ partenaire.isActive ? 'actif' : 'inactif' }}
                             <input type="checkbox"

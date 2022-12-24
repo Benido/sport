@@ -62,7 +62,7 @@ class PartenaireController extends AbstractController
             $idPartenaire = (string) $this->getUser()->getPartenaire()->getId();
             if ($id !== $idPartenaire ) {
                 return $this->redirectToRoute('app_home', array('error' => 'votre partenaire_id est :' . $idPartenaire));
-            };
+            }
         }
         //On modifie le statut actif du partenaire dans la DB.
         $isActive = $request->request->getBoolean('isActive');
