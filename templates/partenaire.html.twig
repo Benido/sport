@@ -79,7 +79,7 @@
                 </div>
             {% endif %}
         </div>
-        <div id="structuresDisplayBlock" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2 rounded bg-light p-3 shadow-sm">
+        <div id="structuresDisplayBlock" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2 rounded bg-light mb-3 p-3 shadow-sm">
             {% for structure in structures %}
                     <div class="structureCard col" id={{ structure.getId }}>
                         <div class="entityCard flex-column align-items-center p-3 shadow-sm {{ structure.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">

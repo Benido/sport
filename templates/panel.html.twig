@@ -31,7 +31,7 @@
                 <button id="showAllPartenaires" class="btn btn-primary col shadow-sm" type="button">tous</button>
             </div>
         </div>
-        <div id="partenairesDisplayBlock" class="row row-cols-1 row-cols-md-2 g-2 rounded bg-light p-3 shadow-sm">
+        <div id="partenairesDisplayBlock" class="row row-cols-1 row-cols-md-2 g-2 rounded bg-light p-3 mb-3 shadow-sm">
             {% for partenaire in partenaires %}
                 <div id="{{ partenaire.getId }}" class="partenaireCard col">
                     <div class=" entityCard flex-column align-items-center p-3 shadow-sm {{ partenaire.isActive ? 'backgroundGreen' : 'backgroundYellow' }}">
