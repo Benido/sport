@@ -28,7 +28,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         //Set up the random data generator
-        $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create('fr_FR');
 
         //Creates an Admin
         $admin = new Admin();
@@ -39,10 +39,15 @@ class AppFixtures extends Fixture
         $manager->persist($admin);
 
         //Creates 3 Partenaires and stores them to generate Client accounts
+        $companyNames = ['Sport Ouest', 'Fitness Plus', 'BG Factory', 'Muscle Up', 'Sport Biz', 'Schwarzee', 'Sport et santé',
+            'Wellness group', 'Jean Lessalles', 'La compagnie du muscle', 'Est Fitness', 'Nord Sport', 'Sud Fitness', 'Les ateliers du fitness',
+            'Gym park', 'Bonnet Sport', 'Pichon Fitness', 'Groupe Lopez', 'Rechidi Sport', 'Benido'
+
+        ];
         $partenaires = [];
-        for ($i = 1; $i < 4; $i++) {
+        for ($i = 1; $i < 16; $i++) {
             $partenaire = new Partenaire();
-            $partenaire->setFranchiseName('Partenaire ' . $i);
+            $partenaire->setFranchiseName($faker->unique()->randomElement($companyNames));
             $partenaire->setActive(mt_rand(0, 1));
             $partenaire->setPermissions(json_encode($this->randomPerm()));
             $partenaire->setShortDescription($faker->sentence());
@@ -64,20 +69,20 @@ class AppFixtures extends Fixture
             $clients[] = $client;
         }
 
-        //Creates 15 Structures with random permissions
-        $indexTable = [0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2];
+        //Creates Structures with random permissions
         $structures = [];
-
-        for ($i = 0; $i < 15; $i++) {
-            $structure = new Structure();
-            $structure->setAddress($faker->streetAddress());
-            $structure->setPostalCode($i * 1000 + 9000);
-            $structure->setCity($i + 1 . ' test-City');
-            $structure->setActive(mt_rand(0, 1));
-            $structure->setPermissions(json_encode($this->randomPerm()));
-            $structure->setPartenaire($partenaires[$indexTable[$i]]);
-            $manager->persist($structure);
-            $structures[] = $structure;
+        foreach ($partenaires as $i => $partenaire) {
+            for ($y = 1; $y < (mt_rand(2, 13)); $y++ ) {
+                $structure = new Structure();
+                $structure->setAddress($faker->streetAddress());
+                $structure->setPostalCode($i * 3000 + 9000);
+                $structure->setCity($faker->city());
+                $structure->setActive(mt_rand(0, 1));
+                $structure->setPermissions(json_encode($this->randomPerm()));
+                $structure->setPartenaire($partenaire);
+                $manager->persist($structure);
+                $structures[] = $structure;
+            }
         }
 
         //Creates one Manager account for each Structure
