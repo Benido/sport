@@ -11,6 +11,8 @@ use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class StructureController extends AbstractController
 {
+    //Affiche la page Structure
+
     #[Route(path: '/structure/{id}', name: 'app_structure', methods : ['GET'])]
     public function structure(string $id, StructureRepository $structureRepo) {
         if (!$this->isGranted('ROLE_ADMIN')){
@@ -41,6 +43,8 @@ class StructureController extends AbstractController
             ]);
     }
 
+    //Edite les permissions de la structure
+
     #[Route(path: '/structure/{id}/permissions', name:'app_structure_permissions', methods: ['POST'])]
     public function editStructure (string $id, Request $request, StructureRepository $structureRepository): Response
     {
@@ -57,13 +61,15 @@ class StructureController extends AbstractController
         $structure->setPermissions( json_encode($permissions));
         $structureRepository->save($structure, true);
 
-        return new Response('Permissions modifiées pour ');
+        return new Response('Permissions modifiées pour ' . $structure->getAddress() . ', ' . $structure->getCity());
     }
+
+    //Edite le statut d'activité de la structure
 
     #[Route(path: '/structure/{id}/isactive', name:'app_structure_isactive', methods: ['POST'])]
     public function editPartenaireActiveState (string $id, Request $request, StructureRepository $structureRepository): Response
     {
-        //On requête la DB pour modifier le statut actif de la structure.
+        //Nous persistons la modification du statut de la structure.
         $isActive = $request->request->getBoolean('isActive');
         $structure = $structureRepository->find($id);
         $structure->setActive($isActive);

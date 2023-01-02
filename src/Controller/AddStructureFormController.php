@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AddStructureFormController extends AbstractController
 {
+    //Affiche la page Ajouter une nouvelle structure
+
     #[Route(path: '/ajouter_structure/{id}', name: 'ajouter_structure', methods : ['GET'])]
     public function addStructure (int $id, PartenaireRepository $partenaireRepo) : Response
     {
@@ -31,6 +33,7 @@ class AddStructureFormController extends AbstractController
     }
 
 
+    //Envoie l'email demandant au Client la validation de l'ajout de la nouvelle structure
 
     #[Route(path: '/validation_structure', name: 'app_validation_structure', methods : ['POST'])]
     public function sendValidationEmail (Request $request, SendEmailService $mail, JWTService $jwt)
@@ -70,6 +73,8 @@ class AddStructureFormController extends AbstractController
 
 
     }
+
+    //Vérifie le JWT comprenant les informations de la nouvelle structure et envoie un email de confirmation
 
     #[Route(path: '/verification_token/{token}', name: 'app_token_verification', methods : ['GET'])]
     public function tokenVerification($token, JWTService $jwt, StructureRepository $structureRepo, PartenaireRepository $partenaireRepo, SendEmailService $mail): Response

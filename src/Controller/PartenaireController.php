@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PartenaireController extends AbstractController
 {
+    //Affiche la page partenaire
 
     #[Route(path: '/partenaire/{id}', name:'app_partenaire', methods: ['GET'])]
     public function partenaire(string $id, PartenaireRepository $partenaireRepo): Response
@@ -35,6 +36,8 @@ class PartenaireController extends AbstractController
             ]);
     }
 
+    //Edite les permissions par défaut du partenaire
+
     #[Route(path: '/partenaire/{id}/permissions', name:'app_partenaire_permissions', methods: ['POST'])]
     public function editPartenairePermissions (string $id, Request $request, PartenaireRepository $partenaireRepository): Response
     {
@@ -54,6 +57,8 @@ class PartenaireController extends AbstractController
 
         return new Response('Permission modifiée pour '. $partenaire->getFranchiseName(), 200);
     }
+
+    //Edite le statut d'activité du partenaire
 
     #[Route(path: '/partenaire/{id}/isactive', name:'app_partenaire_isactive', methods: ['POST'])]
     public function editPartenaireActiveState (string $id, Request $request, PartenaireRepository $partenaireRepository): Response
