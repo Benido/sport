@@ -8,12 +8,14 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.7",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/apache-pack": "^1.0",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
+        "fakerphp/faker": "^1.20",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.1.*",
         "symfony/mailer": "6.1.*",
@@ -85,8 +87,6 @@
         }
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "fakerphp/faker": "^1.20",
         "symfony/debug-bundle": "6.1.*",
         "symfony/maker-bundle": "^1.47",
         "symfony/stopwatch": "6.1.*",
