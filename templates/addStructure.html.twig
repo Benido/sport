@@ -23,18 +23,18 @@
             <div class="d-flex flex-column justify-content-between">
                 <div class="">
                     <label class="form-label" for="address">Adresse</label>
-                    <input type="text" class="form-control" name="address" id="address">
-                    <div id="addressError"></div>
+                    <input type="text" class="form-control" name="address" id="address" required>
+                    <div class="ms-3"><small id="addressError" class="text-danger"></small></div>
                 </div>
                 <div class="mt-3">
                     <label class="form-label" for="postalCode">Code postal</label>
-                    <input type="text" class="form-control" name="postalCode" id="postalCode">
-                    <div id="postalCodeError"></div>
+                    <input type="text" class="form-control" name="postalCode" id="postalCode" required>
+                    <div class="ms-3"><small  id="postalCodeError" class="text-danger"></small></div>
                 </div>
                 <div class="mt-3">
                     <label class="form-label" for="city">Ville</label>
-                    <input type="text" class="form-control" name="city" id="city">
-                    <div id="cityError"></div>
+                    <input type="text" class="form-control" name="city" id="city" required>
+                    <div class="ms-3"><small id="cityError" class="text-danger"></small></div>
                 </div>
                 <button id= "ajouterStructureBtn" type="submit" class="btn btn-primary mx-auto my-3 w-50">Ajouter</button>
                 <input id="inputPartenaireId" hidden value="{{ partenaire.getId }}">

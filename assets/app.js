@@ -16,8 +16,6 @@ const $ = require('jquery');
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
 
-import './permissions'
-
 import './switchActive'
 
 /*

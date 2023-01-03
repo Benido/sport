@@ -14,7 +14,7 @@
 <p>{{ newStructure.city }}</p>
 
 <p>Cliquez-sur ce lien pour valider son autorisation d'accès aux données :</p>
-<a href="/verification_token/{{ token }}">Cliquez ici</a>
+<a href="{{ app.request.getSchemeAndHttpHost ~ app.request.baseUrl }}/verification_token/{{ token }}">Cliquez ici</a>
 <p>Ce lien expire le {{ expiration_date }}</p>
 
 </body>

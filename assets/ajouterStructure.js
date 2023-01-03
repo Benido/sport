@@ -1,6 +1,15 @@
 //Gère le formulaire d'ajout de structure
 
-function generatePermissionObject () {
+const address = $('#address')
+const postalCode = $('#postalCode')
+const city = $('#city')
+const addressError = $('#addressError')
+const postalCodeError = $('#postalCodeError')
+const cityError = $('#cityError')
+
+
+//Crée l'objet permission associé à la nouvelle structure
+function generatePermissionObject() {
     let permissionsTable = {}
     $('.permissions').children('input').each(function () {
         permissionsTable[this.id] = this.checked ? 1 : 0
@@ -8,11 +17,51 @@ function generatePermissionObject () {
     return permissionsTable
 }
 
-$('#ajouterStructureForm').on('submit', function (e) {
-    e.preventDefault()
-    if ($('#addressError').text() !== '' || $('#postalCodeError').text() !== '' || $('#cityError').text() !== '' ) {
-        $('#submitError').text('Vérifiez vos entrées')
+
+function checkAddress () {
+    let addressValue = address.val()
+    if(addressValue.length > 255) {
+        addressError.text('L\'adresse ne doit pas dépasser 255 caractères')
     } else {
+        addressError.text('')
+    }
+}
+
+function checkPostalCode() {
+    const postalCodeRegex = new RegExp(/^(\d{5})$/, 'g')
+    if(!postalCodeRegex.test(postalCode.val())) {
+        postalCodeError.text('Le code postal doit comporter 5 chiffres')
+    } else {
+        postalCodeError.text('')
+    }
+}
+
+function checkCity() {
+    let cityValue = city.val()
+    if(cityValue.length > 255) {
+    cityError.text('Le nom de ville ne doit pas dépasser 255 caractères')
+    } else {
+        cityError.text('')
+    }
+}
+
+// On vérifie que les entrées sont correctement formatées
+address.on('keyup', checkAddress)
+postalCode.on('keyup', checkPostalCode)
+city.on('keyup', checkCity)
+
+
+
+$('#ajouterStructureForm').on('submit', function(e) {
+    e.preventDefault()
+
+    checkAddress()
+    checkPostalCode()
+    checkCity()
+
+    if($('#addressError').text() !== '' || $('#postalCodeError').text() !== '' || $('#cityError').text() !== '' ) {
+        $('#submitError').text('Vérifiez vos entrées')
+    }else {
         //On réutilise la fonction de 'permissions.js' qui génère un tableau de permissions
         const jsonPermissions = generatePermissionObject()
 
@@ -40,9 +89,6 @@ $('#ajouterStructureForm').on('submit', function (e) {
                     newTab.document.open()
                     newTab.document.write(data)
                     newTab.document.close()
-
-                    //Charge l'html renvoyé par le serveur sur la même page
-                    //$('html').html(data)
                 }
             }
         )

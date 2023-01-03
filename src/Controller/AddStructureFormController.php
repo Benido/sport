@@ -53,25 +53,28 @@ class AddStructureFormController extends AbstractController
             $payload = $newStructure;
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'), 604800);
 
-           /*$mail->send(
-                'no-reply@sapik-permissions.com',
-                $email,
-                'Création d\'une nouvelle structure',
-                'security/validationEmail.html.twig',
-                [
-                    'expiration_date' => new \DateTime('+7 days'),
+            try {
+                $emailVariables = [
+                    'expiration_date' => (new \DateTime('+7 days'))->format('d-m-Y'),
                     'newStructure' => $newStructure,
                     'token' => $token
-                ]);
-                */
+                ];
 
-            return $this->render('security/validationEmail.html.twig', [
-                'expiration_date' => (new \DateTime('+7 days'))->format('d-m-Y'),
-                'newStructure' => $newStructure,
-                'token' => $token
-            ]);
+               $mail->send(
+                    'besnie.remi@bbox.fr',
+                    'remi.besnie@gmail.com',
+                    'Création d\'une nouvelle structure',
+                    'security/validationEmail.html.twig',
+                    $emailVariables
+               );
 
+                return $this->render('security/validationEmail.html.twig', $emailVariables );
 
+            } catch (\Exception $e) {
+                    $this->addFlash('danger', 'L\'email n\'a pu être envoyé');
+                    //return new Response($e->getMessage(),500,);
+                    return $this->redirect($request->headers->get('referer'));
+               }
     }
 
     //Vérifie le JWT comprenant les informations de la nouvelle structure et envoie un email de confirmation
@@ -80,7 +83,8 @@ class AddStructureFormController extends AbstractController
     public function tokenVerification($token, JWTService $jwt, StructureRepository $structureRepo, PartenaireRepository $partenaireRepo, SendEmailService $mail): Response
     {
         //On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
-        if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
+        if(
+            $jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
             // On récupère le payload
             $payload = $jwt->getPayload($token);
             $partenaire = $partenaireRepo->find((int) $payload['partenaireId']);

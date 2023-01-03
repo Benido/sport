@@ -4,6 +4,7 @@
     {{ parent() }}
     {{ (is_granted('ROLE_ADMIN') or partenaire.isActive) ? encore_entry_script_tags('links') : '' }}
     {{ encore_entry_script_tags('searchStructure') }}
+    {{ encore_entry_script_tags('permissions') }}
 {% endblock %}
 
 {% block body %}
