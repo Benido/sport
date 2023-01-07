@@ -7,7 +7,7 @@ Application déployée sur Heroku \>  https://sapik.herokuapp.com/](https://sapi
 
 Une application de gestion d'autorisations d'accès à une API externe
 
-Cette application utilise le SGBD MariaDB
+Cette application utilise le SGBD MariaDB et le mailer Sendgrid
 
 Pour déployer en local : 
    - Assurez vous que Node.js et Composer soient installés ( dans une console, node --version et composer --version)
@@ -18,5 +18,9 @@ Pour déployer en local :
     
 
 Pour déployer sur Heroku : 
-- Définissez la variable d'environnement stockant le secret utilisé pour générer les Json Web Tokens et donner lui en valeur la chaîne de caractères de votre choix :
-    Settings \> Config Vars \>  JWT_SECRET='machaînedecaractères'
+- Choisissez un serveur Apache avec PHP 8.0 minimum et installez Node.js
+- Créez un compte sur Sendgrid et générez une clé d'API en choisissant l'option SMTP relay
+- Dans les options Settings \> Config Vars \> 
+   - Définissez la variable d'environnement pour stocker la clé d'API utilisée par le mailer : MAILER_DSN=sendgrid+smtp://'votre clé API'@default
+   - Définissez la variable d'environnement stockant le secret utilisé pour générer les Json Web Tokens et donner lui en valeur la chaîne de caractères de votre choix :
+      JWT_SECRET='machaînedecaractères'
